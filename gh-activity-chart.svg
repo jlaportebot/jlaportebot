@@ -1,74 +1,95 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400">
   <defs>
     <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#3fb950" stop-opacity="0.3"/>
+      <stop offset="0%" stop-color="#3fb950" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="#3fb950" stop-opacity="0.02"/>
     </linearGradient>
-    <linearGradient id="gP" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.3"/>
+    <linearGradient id="gO" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="gOp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d2a8ff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#d2a8ff" stop-opacity="0.02"/>
     </linearGradient>
     <linearGradient id="gM" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#f78166" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="#f78166" stop-opacity="0.02"/>
     </linearGradient>
+    <linearGradient id="gC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f85149" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#f85149" stop-opacity="0.02"/>
+    </linearGradient>
   </defs>
-  <rect width="900" height="360" rx="12" fill="#0d1117"/>
-  <rect width="900" height="360" rx="12" fill="none" stroke="#30363d" stroke-width="1"/>
-  <text x="55" y="28" fill="#e6edf3" font-size="15" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">GitHub Activity — jlaportebot</text>
-  <text x="830" y="28" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Updated May 26, 2026</text>
-  <line x1="55" y1="305.0" x2="830" y2="305.0" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="309.0" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
-  <line x1="55" y1="275.8" x2="830" y2="275.8" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="279.8" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">10</text>
-  <line x1="55" y1="246.6" x2="830" y2="246.6" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="250.6" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">20</text>
-  <line x1="55" y1="217.4" x2="830" y2="217.4" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="221.4" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">30</text>
-  <line x1="55" y1="188.1" x2="830" y2="188.1" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="192.1" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">40</text>
-  <line x1="55" y1="158.9" x2="830" y2="158.9" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="162.9" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">50</text>
-  <line x1="55" y1="129.7" x2="830" y2="129.7" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="133.7" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">60</text>
-  <line x1="55" y1="100.5" x2="830" y2="100.5" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="104.5" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">70</text>
-  <line x1="55" y1="71.3" x2="830" y2="71.3" stroke="#21262d" stroke-width="1"/>
-  <text x="47" y="75.3" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">80</text>
-  <line x1="55.0" y1="45" x2="55.0" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="55.0" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 03</text>
-  <line x1="151.9" y1="45" x2="151.9" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="151.9" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 06</text>
-  <line x1="248.8" y1="45" x2="248.8" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="248.8" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 09</text>
-  <line x1="345.6" y1="45" x2="345.6" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="345.6" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 12</text>
-  <line x1="442.5" y1="45" x2="442.5" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="442.5" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 15</text>
-  <line x1="539.4" y1="45" x2="539.4" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="539.4" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 18</text>
-  <line x1="636.2" y1="45" x2="636.2" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="636.2" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 21</text>
-  <line x1="733.1" y1="45" x2="733.1" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="733.1" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 24</text>
-  <line x1="830.0" y1="45" x2="830.0" y2="305" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
-  <text x="830.0" y="325" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 27</text>
-  <path d="M55.0,267.0L87.3,246.6L119.6,234.9L151.9,217.4L184.2,205.7L216.5,196.9L248.8,196.9L281.0,196.9L313.3,196.9L345.6,196.9L377.9,196.9L410.2,196.9L442.5,196.9L474.8,194.0L507.1,182.3L539.4,170.6L571.7,156.0L604.0,138.5L636.2,121.0L668.5,103.4L700.8,88.8L733.1,77.1L765.4,71.3L797.7,62.5L830.0,59.6L830.0,305.0L55.0,305.0Z" fill="url(#gP)"/>
-  <path d="M55.0,305.0L87.3,305.0L119.6,305.0L151.9,305.0L184.2,305.0L216.5,305.0L248.8,305.0L281.0,305.0L313.3,305.0L345.6,305.0L377.9,305.0L410.2,305.0L442.5,305.0L474.8,305.0L507.1,305.0L539.4,305.0L571.7,305.0L604.0,305.0L636.2,305.0L668.5,305.0L700.8,305.0L733.1,305.0L765.4,305.0L797.7,305.0L830.0,305.0L830.0,305.0L55.0,305.0Z" fill="url(#gR)"/>
-  <path d="M55.0,305.0L87.3,299.2L119.6,296.2L151.9,296.2L184.2,293.3L216.5,293.3L248.8,290.4L281.0,290.4L313.3,290.4L345.6,290.4L377.9,290.4L410.2,290.4L442.5,290.4L474.8,290.4L507.1,287.5L539.4,281.6L571.7,278.7L604.0,278.7L636.2,278.7L668.5,272.9L700.8,272.9L733.1,272.9L765.4,269.9L797.7,269.9L830.0,269.9L830.0,305.0L55.0,305.0Z" fill="url(#gM)"/>
-  <path d="M55.0,267.0L87.3,246.6L119.6,234.9L151.9,217.4L184.2,205.7L216.5,196.9L248.8,196.9L281.0,196.9L313.3,196.9L345.6,196.9L377.9,196.9L410.2,196.9L442.5,196.9L474.8,194.0L507.1,182.3L539.4,170.6L571.7,156.0L604.0,138.5L636.2,121.0L668.5,103.4L700.8,88.8L733.1,77.1L765.4,71.3L797.7,62.5L830.0,59.6" fill="none" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M55.0,305.0L87.3,305.0L119.6,305.0L151.9,305.0L184.2,305.0L216.5,305.0L248.8,305.0L281.0,305.0L313.3,305.0L345.6,305.0L377.9,305.0L410.2,305.0L442.5,305.0L474.8,305.0L507.1,305.0L539.4,305.0L571.7,305.0L604.0,305.0L636.2,305.0L668.5,305.0L700.8,305.0L733.1,305.0L765.4,305.0L797.7,305.0L830.0,305.0" fill="none" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M55.0,305.0L87.3,299.2L119.6,296.2L151.9,296.2L184.2,293.3L216.5,293.3L248.8,290.4L281.0,290.4L313.3,290.4L345.6,290.4L377.9,290.4L410.2,290.4L442.5,290.4L474.8,290.4L507.1,287.5L539.4,281.6L571.7,278.7L604.0,278.7L636.2,278.7L668.5,272.9L700.8,272.9L733.1,272.9L765.4,269.9L797.7,269.9L830.0,269.9" fill="none" stroke="#f78166" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="830.0" cy="59.6" r="4" fill="#58a6ff"/>
-  <text x="840.0" y="63.6" fill="#58a6ff" font-size="12" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">84</text>
-  <circle cx="830.0" cy="305.0" r="4" fill="#3fb950"/>
-  <text x="840.0" y="309.0" fill="#3fb950" font-size="12" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
-  <circle cx="830.0" cy="269.9" r="4" fill="#f78166"/>
-  <text x="840.0" y="273.9" fill="#f78166" font-size="12" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">12</text>
-  <line x1="55" y1="342" x2="73" y2="342" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round"/>
-  <text x="79" y="346" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Repositories</text>
-  <line x1="220" y1="342" x2="238" y2="342" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round"/>
-  <text x="244" y="346" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">PRs Opened</text>
-  <line x1="385" y1="342" x2="403" y2="342" stroke="#f78166" stroke-width="2.5" stroke-linecap="round"/>
-  <text x="409" y="346" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">PRs Merged</text>
+  <rect width="960" height="400" rx="12" fill="#0d1117"/>
+  <rect width="960" height="400" rx="12" fill="none" stroke="#30363d" stroke-width="1"/>
+  <text x="55" y="30" fill="#e6edf3" font-size="15" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">GitHub Activity — jlaportebot</text>
+  <text x="880" y="30" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Updated May 27, 2026</text>
+  <line x1="55" y1="340.0" x2="880" y2="340.0" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="344.0" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+  <line x1="55" y1="307.8" x2="880" y2="307.8" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="311.8" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">10</text>
+  <line x1="55" y1="275.6" x2="880" y2="275.6" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="279.6" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">20</text>
+  <line x1="55" y1="243.3" x2="880" y2="243.3" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="247.3" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">30</text>
+  <line x1="55" y1="211.1" x2="880" y2="211.1" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="215.1" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">40</text>
+  <line x1="55" y1="178.9" x2="880" y2="178.9" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="182.9" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">50</text>
+  <line x1="55" y1="146.7" x2="880" y2="146.7" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="150.7" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">60</text>
+  <line x1="55" y1="114.4" x2="880" y2="114.4" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="118.4" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">70</text>
+  <line x1="55" y1="82.2" x2="880" y2="82.2" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="86.2" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">80</text>
+  <line x1="55" y1="50.0" x2="880" y2="50.0" stroke="#21262d" stroke-width="1"/>
+  <text x="47" y="54.0" fill="#8b949e" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">90</text>
+  <line x1="55.0" y1="50" x2="55.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="55.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 02</text>
+  <line x1="154.0" y1="50" x2="154.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="154.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 05</text>
+  <line x1="253.0" y1="50" x2="253.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="253.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 08</text>
+  <line x1="352.0" y1="50" x2="352.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="352.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 11</text>
+  <line x1="451.0" y1="50" x2="451.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="451.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 14</text>
+  <line x1="550.0" y1="50" x2="550.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="550.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 17</text>
+  <line x1="649.0" y1="50" x2="649.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="649.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 20</text>
+  <line x1="748.0" y1="50" x2="748.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="748.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 23</text>
+  <line x1="847.0" y1="50" x2="847.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="847.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 26</text>
+  <line x1="880.0" y1="50" x2="880.0" y2="340" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="880.0" y="360" fill="#8b949e" font-size="10" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">May 27</text>
+  <path d="M55.0,340.0L88.0,298.1L121.0,275.6L154.0,262.7L187.0,243.3L220.0,230.4L253.0,220.8L286.0,220.8L319.0,220.8L352.0,220.8L385.0,220.8L418.0,220.8L451.0,220.8L484.0,220.8L517.0,217.6L550.0,204.7L583.0,191.8L616.0,175.7L649.0,156.3L682.0,137.0L715.0,117.7L748.0,101.6L781.0,88.7L814.0,82.2L847.0,72.6L880.0,66.1L880.0,340.0L55.0,340.0Z" fill="url(#gO)"/>
+  <path d="M55.0,336.8L88.0,311.0L121.0,294.9L154.0,288.4L187.0,272.3L220.0,259.4L253.0,253.0L286.0,253.0L319.0,253.0L352.0,253.0L385.0,253.0L418.0,253.0L451.0,253.0L484.0,253.0L517.0,249.8L550.0,224.0L583.0,220.8L616.0,220.8L649.0,220.8L682.0,220.8L715.0,220.8L748.0,220.8L781.0,204.7L814.0,182.1L847.0,162.8L880.0,159.6L880.0,340.0L55.0,340.0Z" fill="url(#gR)"/>
+  <path d="M55.0,340.0L88.0,298.1L121.0,275.6L154.0,262.7L187.0,243.3L220.0,230.4L253.0,220.8L286.0,220.8L319.0,220.8L352.0,220.8L385.0,220.8L418.0,220.8L451.0,220.8L484.0,220.8L517.0,217.6L550.0,204.7L583.0,191.8L616.0,175.7L649.0,156.3L682.0,137.0L715.0,117.7L748.0,101.6L781.0,88.7L814.0,82.2L847.0,72.6L880.0,66.1" fill="none" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.0,336.8L88.0,311.0L121.0,294.9L154.0,288.4L187.0,272.3L220.0,259.4L253.0,253.0L286.0,253.0L319.0,253.0L352.0,253.0L385.0,253.0L418.0,253.0L451.0,253.0L484.0,253.0L517.0,249.8L550.0,224.0L583.0,220.8L616.0,220.8L649.0,220.8L682.0,220.8L715.0,220.8L748.0,220.8L781.0,204.7L814.0,182.1L847.0,162.8L880.0,159.6" fill="none" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.0,340.0L88.0,314.2L121.0,301.3L154.0,294.9L187.0,278.8L220.0,282.0L253.0,272.3L286.0,275.6L319.0,275.6L352.0,278.8L385.0,278.8L418.0,278.8L451.0,278.8L484.0,278.8L517.0,275.6L550.0,272.3L583.0,269.1L616.0,259.4L649.0,240.1L682.0,227.2L715.0,214.3L748.0,204.7L781.0,204.7L814.0,207.9L847.0,214.3L880.0,207.9" fill="none" stroke="#d2a8ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.0,340.0L88.0,340.0L121.0,333.6L154.0,330.3L187.0,330.3L220.0,327.1L253.0,327.1L286.0,323.9L319.0,323.9L352.0,323.9L385.0,323.9L418.0,323.9L451.0,323.9L484.0,323.9L517.0,323.9L550.0,320.7L583.0,314.2L616.0,311.0L649.0,311.0L682.0,311.0L715.0,304.6L748.0,304.6L781.0,304.6L814.0,301.3L847.0,301.3L880.0,301.3" fill="none" stroke="#f78166" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M55.0,340.0L88.0,323.9L121.0,320.7L154.0,317.4L187.0,314.2L220.0,301.3L253.0,301.3L286.0,301.3L319.0,301.3L352.0,298.1L385.0,298.1L418.0,298.1L451.0,298.1L484.0,298.1L517.0,298.1L550.0,291.7L583.0,288.4L616.0,285.2L649.0,285.2L682.0,278.8L715.0,278.8L748.0,272.3L781.0,259.4L814.0,253.0L847.0,236.9L880.0,236.9" fill="none" stroke="#f85149" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="880.0" cy="66.1" r="3.5" fill="#58a6ff"/>
+  <text x="889.0" y="70.1" fill="#58a6ff" font-size="11" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">85</text>
+  <circle cx="880.0" cy="159.6" r="3.5" fill="#3fb950"/>
+  <text x="889.0" y="163.6" fill="#3fb950" font-size="11" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">56</text>
+  <circle cx="880.0" cy="207.9" r="3.5" fill="#d2a8ff"/>
+  <text x="889.0" y="211.9" fill="#d2a8ff" font-size="11" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">41</text>
+  <circle cx="880.0" cy="301.3" r="3.5" fill="#f78166"/>
+  <text x="889.0" y="305.3" fill="#f78166" font-size="11" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">12</text>
+  <circle cx="880.0" cy="236.9" r="3.5" fill="#f85149"/>
+  <text x="889.0" y="240.9" fill="#f85149" font-size="11" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">32</text>
+  <line x1="55" y1="368" x2="71" y2="368" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="77" y="372" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Repos</text>
+  <line x1="255" y1="368" x2="271" y2="368" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="277" y="372" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">PRs Opened</text>
+  <line x1="455" y1="368" x2="471" y2="368" stroke="#d2a8ff" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="477" y="372" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Open PRs</text>
+  <line x1="55" y1="386" x2="71" y2="386" stroke="#f78166" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="77" y="390" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Merged</text>
+  <line x1="255" y1="386" x2="271" y2="386" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="277" y="390" fill="#8b949e" font-size="11" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Closed</text>
 </svg>
