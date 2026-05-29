@@ -1,9 +1,3 @@
-### Hi, I'm Jonathan 👋
-
-I build tools, fix bugs, and contribute to open source.
-
----
-
 <img src="./gh-activity-chart.svg" alt="GitHub Activity Chart" width="960"/>
 
 **What this tracks:** Cumulative counts over time
