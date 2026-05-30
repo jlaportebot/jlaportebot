@@ -1,8 +1,9 @@
 {
   "username": "jlaportebot",
-  "total_added": 67790,
-  "total_deleted": 2099,
-  "net_lines": 65691,
-  "merged_prs": 70,
-  "updated": "2026-05-30T15:20:14.185462+00:00"
+  "total_added": 61105,
+  "total_deleted": 4939,
+  "net_lines": 56166,
+  "total_commits": 135,
+  "repos_processed": 53,
+  "updated": "2026-05-30T15:53:21.728626+00:00"
 }
