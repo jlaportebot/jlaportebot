@@ -1,9 +1,13 @@
 {
   "username": "jlaportebot",
-  "total_added": 61105,
-  "total_deleted": 4939,
-  "net_lines": 56166,
-  "total_commits": 135,
-  "repos_processed": 53,
-  "updated": "2026-05-30T16:00:27.568764+00:00"
+  "emails_matched": [
+    "jlaportebot@gmail.com",
+    "jlaportebot@users.noreply.github.com"
+  ],
+  "total_added": 88677,
+  "total_deleted": 4967,
+  "net_lines": 83710,
+  "total_commits": 217,
+  "repos_with_commits": 47,
+  "updated": "2026-05-30T17:29:47.606211+00:00"
 }

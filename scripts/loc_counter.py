@@ -3,10 +3,11 @@
 Count total lines of code committed by a GitHub user across ALL their repos.
 
 Strategy:
-1. For repos the user OWNS (non-fork): clone and `git log --shortstat`
-2. For forks: look up the upstream source repo, then check PRs there
-3. For external contributed repos: check PRs via API
-4. Merge all counts and generate an SVG badge
+1. ALL repos (owned + forks): blobless clone (--filter=blob:none) + all branches
+   Count every commit matching user's email(s)
+2. For fork upstreams where the fork had 0 local commits: count PR diff stats via API
+3. For external contributed repos (no fork/own): count PR diff stats via API
+4. NO double counting
 """
 import json
 import os
@@ -17,10 +18,14 @@ from datetime import datetime, timezone
 
 USERNAME = os.environ.get("GITHUB_USERNAME", "jlaportebot")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", ".")
-FORK_SOURCES_FILE = os.environ.get("FORK_SOURCES_FILE", "")
+
+EMAILS = [
+    f"{USERNAME}@gmail.com",
+    f"{USERNAME}@users.noreply.github.com",
+]
 
 
-def run(cmd, timeout=120):
+def run(cmd, timeout=300):
     try:
         r = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout)
         return r.stdout.strip(), r.returncode
@@ -28,38 +33,18 @@ def run(cmd, timeout=120):
         return "", 1
 
 
-def api_get_json(url, timeout=30):
-    out, rc = run(f"gh api '{url}' 2>/dev/null", timeout=timeout)
-    if not out or rc != 0:
-        return None
-    try:
-        return json.loads(out)
-    except json.JSONDecodeError:
-        return None
-
-
-def get_owned_repos():
-    """Get all repos with fork flag."""
-    out, rc = run(
-        f"gh api users/{USERNAME}/repos --paginate "
-        f"--jq '.[] | {{name: .full_name, fork: .fork}}' 2>/dev/null",
-        timeout=120
-    )
+def get_all_repos():
+    out, rc = run(f"gh api users/{USERNAME}/repos --paginate 2>/dev/null", timeout=120)
     if not out:
         return []
-    repos = []
-    for line in out.split("\n"):
-        line = line.strip()
-        if line:
-            try:
-                repos.append(json.loads(line))
-            except json.JSONDecodeError:
-                pass
-    return repos
+    try:
+        repos = json.loads(out)
+    except json.JSONDecodeError:
+        return []
+    return [{"name": r["full_name"], "fork": r.get("fork", False)} for r in repos]
 
 
 def get_fork_sources(fork_repos):
-    """For each fork, find the upstream source repo."""
     sources = {}
     for fork in fork_repos:
         out, rc = run(f"gh api repos/{fork} --jq '.source.full_name' 2>/dev/null", timeout=15)
@@ -69,47 +54,50 @@ def get_fork_sources(fork_repos):
 
 
 def get_contributed_repos():
-    """Find repos where user has merged PRs that they don't own."""
     all_repos = set()
-    page = 1
-    while True:
-        out, rc = run(
-            f'gh api "search/issues?q=type:pr+author:{USERNAME}+is:merged&per_page=100&page={page}" '
-            f"--jq '.items[].repository_url' 2>/dev/null",
-            timeout=60
-        )
-        if not out or rc != 0:
-            break
-        found = False
-        for line in out.split("\n"):
-            line = line.strip()
-            if line and "/repos/" in line:
-                repo = line.split("/repos/")[-1].strip("/")
-                all_repos.add(repo)
-                found = True
-        if not found or page > 5:
-            break
-        page += 1
+    for state in ["merged", "open"]:
+        page = 1
+        while True:
+            q = f"type:pr+author:{USERNAME}+is:{state}"
+            out, rc = run(
+                f'gh api "search/issues?q={q}&per_page=100&page={page}" '
+                f"--jq '.items[].repository_url' 2>/dev/null",
+                timeout=60
+            )
+            if not out or rc != 0:
+                break
+            found = False
+            for line in out.split("\n"):
+                line = line.strip()
+                if line and "/repos/" in line:
+                    repo = line.split("/repos/")[-1].strip("/")
+                    all_repos.add(repo)
+                    found = True
+            if not found or page > 5:
+                break
+            page += 1
     return list(all_repos)
 
 
-def count_loc_via_clone(repo_full_name, username, tmpdir):
-    """Clone and count via git log --shortstat."""
+def count_loc_via_clone(repo_full_name, tmpdir):
     repo_dir = os.path.join(tmpdir, repo_full_name.replace("/", "_"))
-    out, rc = run(
-        f"git clone --depth=1000 --single-branch https://github.com/{repo_full_name}.git {repo_dir} 2>/dev/null",
-        timeout=120
+    clone_cmd = (
+        f"git clone --filter=blob:none --no-single-branch "
+        f"https://github.com/{repo_full_name}.git {repo_dir} 2>/dev/null"
     )
+    out, rc = run(clone_cmd, timeout=300)
     if rc != 0:
         return 0, 0, 0
     
+    author_args = " ".join(f"--author='{e}'" for e in EMAILS)
+    
     out, rc = run(
-        f"cd {repo_dir} && git log --author='{username}' --shortstat --format='' 2>/dev/null",
-        timeout=60
+        f"cd {repo_dir} && git log --all {author_args} --shortstat --format='' 2>/dev/null",
+        timeout=120
     )
     count_out, _ = run(
-        f"cd {repo_dir} && git log --author='{username}' --oneline 2>/dev/null | wc -l",
-        timeout=30
+        f"cd {repo_dir} && git log --all {author_args} --oneline 2>/dev/null | wc -l",
+        timeout=60
     )
     commit_count = 0
     try:
@@ -141,30 +129,38 @@ def count_loc_via_clone(repo_full_name, username, tmpdir):
 
 
 def count_prs_in_repo(repo_full_name, username):
-    """Count lines from PRs by user in a repo via GitHub API."""
-    # Use search to find PRs by this user in this repo
-    out, rc = run(
-        f'gh api "search/issues?q=type:pr+author:{username}+repo:{repo_full_name}&per_page=100" '
-        f"--jq '.items[].number' 2>/dev/null",
-        timeout=30
-    )
-    if not out:
-        return 0, 0, 0
+    all_prs = []
+    for state in ["merged", "open"]:
+        out, rc = run(
+            f'gh api "search/issues?q=type:pr+author:{username}+repo:{repo_full_name}+is:{state}&per_page=100" '
+            f"--jq '.items[].number' 2>/dev/null",
+            timeout=30
+        )
+        if out:
+            for n in out.split("\n"):
+                if n.strip().isdigit():
+                    all_prs.append(int(n.strip()))
     
-    pr_numbers = [n for n in out.split("\n") if n.strip().isdigit()]
-    if not pr_numbers:
+    if not all_prs:
         return 0, 0, 0
     
     total_added = 0
     total_deleted = 0
     
-    for num in pr_numbers:
-        data = api_get_json(f"repos/{repo_full_name}/pulls/{num}")
-        if data:
-            total_added += data.get("additions", 0)
-            total_deleted += data.get("deletions", 0)
+    for num in all_prs:
+        out, rc = run(
+            f"gh api repos/{repo_full_name}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
+            timeout=15
+        )
+        if out:
+            try:
+                data = json.loads(out)
+                total_added += data.get("a", 0)
+                total_deleted += data.get("d", 0)
+            except json.JSONDecodeError:
+                pass
     
-    return total_added, total_deleted, len(pr_numbers)
+    return total_added, total_deleted, len(all_prs)
 
 
 def format_number(n):
@@ -216,7 +212,7 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
   <text x="790" y="75" fill="#58a6ff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle" font-weight="500">Net Lines (Added − Removed)</text>
   <text x="790" y="115" fill="#f0f6fc" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="34" text-anchor="middle" font-weight="700">{net_str}</text>
   
-  <!-- Footer row -->
+  <!-- Footer -->
   <rect x="20" y="142" width="460" height="42" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
   <text x="250" y="168" fill="#8b949e" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" text-anchor="middle">
     <tspan fill="#c9d1d9" font-weight="600">{commits_str}</tspan> commits across <tspan fill="#c9d1d9" font-weight="600">{repo_count}</tspan> repositories
@@ -229,58 +225,69 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
 
 
 def main():
-    print(f"Counting LOC for @{USERNAME} across all repos...")
+    print(f"Counting LOC for @{USERNAME} across all repos...", flush=True)
     
-    owned = get_owned_repos()
-    own_repos = [r["name"] for r in owned if not r.get("fork")]
-    fork_repos = [r["name"] for r in owned if r.get("fork")]
+    all_repos = get_all_repos()
+    own_repos = [r["name"] for r in all_repos if not r.get("fork")]
+    fork_repos = [r["name"] for r in all_repos if r.get("fork")]
     
-    # Map forks to their upstream source repos
-    print(f"Resolving fork sources for {len(fork_repos)} forks...")
+    print(f"Resolving fork sources for {len(fork_repos)} forks...", flush=True)
     fork_sources = get_fork_sources(fork_repos)
     
-    # Get external contributed repos (from search)
-    contributed = get_contributed_repos()
-    
-    # Build the set of upstream repos to check via API
-    # These are: fork source repos + external contributed repos
-    # Deduplicate against own_repos (we already cloned those)
-    own_set = set(own_repos)
-    api_repos = set()
-    for source in fork_sources.values():
-        if source not in own_set:
-            api_repos.add(source)
-    for repo in contributed:
-        if repo not in own_set:
-            api_repos.add(repo)
-    # Remove any that are already in fork_sources values (dedup)
-    
-    print(f"Own repos (clone): {len(own_repos)}")
-    print(f"Fork upstream repos (API): {len(set(fork_sources.values()))}")
-    print(f"External contributed repos (API): {len(api_repos - set(fork_sources.values()))}")
-    print(f"Total API repos: {len(api_repos)}")
+    print(f"Own repos: {len(own_repos)}, Forks: {len(fork_repos)}", flush=True)
     
     total_added = 0
     total_deleted = 0
     total_commits = 0
-    processed = 0
+    repos_with_commits = 0
+    forks_with_commits = set()
+    forks_no_commits = set()
     
-    # Phase 1: Clone own repos
+    # Phase 1: Clone ALL repos and count every commit
+    all_clone_repos = own_repos + fork_repos
+    
     with tempfile.TemporaryDirectory() as tmpdir:
-        for i, repo in enumerate(own_repos):
-            print(f"  [clone {i+1}/{len(own_repos)}] {repo}...", end=" ", flush=True)
-            a, d, c = count_loc_via_clone(repo, USERNAME, tmpdir)
+        for i, repo in enumerate(all_clone_repos):
+            is_fork = repo in fork_repos
+            label = "fork" if is_fork else "own"
+            print(f"  [{label} {i+1}/{len(all_clone_repos)}] {repo}...", end=" ", flush=True)
+            a, d, c = count_loc_via_clone(repo, tmpdir)
             if a > 0 or d > 0 or c > 0:
                 total_added += a
                 total_deleted += d
                 total_commits += c
-                processed += 1
-                print(f"+{a}/-{d} ({c} commits)")
+                repos_with_commits += 1
+                if is_fork:
+                    forks_with_commits.add(repo)
+                print(f"+{a}/-{d} ({c} commits)", flush=True)
             else:
-                print("skip")
+                if is_fork:
+                    forks_no_commits.add(repo)
+                print("no commits", flush=True)
     
-    # Phase 2: Check upstream repos for PRs
+    # Phase 2: API PR counting for:
+    # a) Fork upstreams where the fork had 0 commits (pristine forks)
+    # b) External repos with no fork/own
+    own_set = set(own_repos)
+    fork_set = set(fork_repos)
+    
+    api_repos = set()
+    
+    # a) Upstreams of forks with no commits
+    for fork in forks_no_commits:
+        if fork in fork_sources:
+            api_repos.add(fork_sources[fork])
+    
+    # b) External contributed repos
+    contributed = get_contributed_repos()
+    fork_source_set = set(fork_sources.values())
+    for repo in contributed:
+        if repo not in own_set and repo not in fork_set and repo not in fork_source_set:
+            api_repos.add(repo)
+    
     api_list = sorted(api_repos)
+    print(f"\nAPI repos (pristine forks + external): {len(api_list)}", flush=True)
+    
     for i, repo in enumerate(api_list):
         print(f"  [api {i+1}/{len(api_list)}] {repo}...", end=" ", flush=True)
         a, d, c = count_prs_in_repo(repo, USERNAME)
@@ -288,34 +295,39 @@ def main():
             total_added += a
             total_deleted += d
             total_commits += c
-            processed += 1
-            print(f"+{a}/-{d} ({c} PRs)")
+            repos_with_commits += 1
+            print(f"+{a}/-{d} ({c} PRs)", flush=True)
         else:
-            print("skip")
+            print("skip", flush=True)
     
-    print(f"\n=== TOTAL: +{total_added} / -{total_deleted} / net {total_added - total_deleted} across {processed} repos ({total_commits} commits/PRs) ===")
+    net = total_added - total_deleted
+    print(f"\n{'='*60}", flush=True)
+    print(f"TOTAL: +{total_added:,} / -{total_deleted:,} / net {net:,}", flush=True)
+    print(f"Across {repos_with_commits} repos, {total_commits} commits/PRs", flush=True)
+    print(f"{'='*60}", flush=True)
     
-    svg = generate_svg(total_added, total_deleted, processed, total_commits)
+    svg = generate_svg(total_added, total_deleted, repos_with_commits, total_commits)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
     svg_path = os.path.join(OUTPUT_DIR, "loc-stats.svg")
     with open(svg_path, "w") as f:
         f.write(svg)
-    print(f"SVG written to {svg_path}")
+    print(f"SVG → {svg_path}", flush=True)
     
     json_path = os.path.join(OUTPUT_DIR, "loc-stats.json")
     with open(json_path, "w") as f:
         json.dump({
             "username": USERNAME,
+            "emails_matched": EMAILS,
             "total_added": total_added,
             "total_deleted": total_deleted,
-            "net_lines": total_added - total_deleted,
+            "net_lines": net,
             "total_commits": total_commits,
-            "repos_processed": processed,
+            "repos_with_commits": repos_with_commits,
             "updated": datetime.now(timezone.utc).isoformat()
         }, f, indent=2)
-    print(f"JSON written to {json_path}")
+    print(f"JSON → {json_path}", flush=True)
 
 
 if __name__ == "__main__":
