@@ -1,0 +1,250 @@
+{
+  "generated_at": "2026-05-31T19:26:36.543219",
+  "pr_count": 114,
+  "repo_count": 56,
+  "daily": [
+    {
+      "date": "2026-05-02",
+      "repos_total": 1,
+      "prs_opened_total": 0,
+      "prs_open_total": 0,
+      "prs_merged_total": 0,
+      "prs_closed_total": 0
+    },
+    {
+      "date": "2026-05-03",
+      "repos_total": 9,
+      "prs_opened_total": 13,
+      "prs_open_total": 8,
+      "prs_merged_total": 0,
+      "prs_closed_total": 5
+    },
+    {
+      "date": "2026-05-04",
+      "repos_total": 14,
+      "prs_opened_total": 20,
+      "prs_open_total": 12,
+      "prs_merged_total": 2,
+      "prs_closed_total": 6
+    },
+    {
+      "date": "2026-05-05",
+      "repos_total": 16,
+      "prs_opened_total": 24,
+      "prs_open_total": 14,
+      "prs_merged_total": 3,
+      "prs_closed_total": 7
+    },
+    {
+      "date": "2026-05-06",
+      "repos_total": 21,
+      "prs_opened_total": 30,
+      "prs_open_total": 19,
+      "prs_merged_total": 3,
+      "prs_closed_total": 8
+    },
+    {
+      "date": "2026-05-07",
+      "repos_total": 25,
+      "prs_opened_total": 35,
+      "prs_open_total": 19,
+      "prs_merged_total": 4,
+      "prs_closed_total": 12
+    },
+    {
+      "date": "2026-05-08",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 22,
+      "prs_merged_total": 4,
+      "prs_closed_total": 12
+    },
+    {
+      "date": "2026-05-09",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 21,
+      "prs_merged_total": 5,
+      "prs_closed_total": 12
+    },
+    {
+      "date": "2026-05-10",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 21,
+      "prs_merged_total": 5,
+      "prs_closed_total": 12
+    },
+    {
+      "date": "2026-05-11",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 20,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-12",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 20,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-13",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 20,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-14",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 20,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-15",
+      "repos_total": 27,
+      "prs_opened_total": 38,
+      "prs_open_total": 20,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-16",
+      "repos_total": 28,
+      "prs_opened_total": 39,
+      "prs_open_total": 21,
+      "prs_merged_total": 5,
+      "prs_closed_total": 13
+    },
+    {
+      "date": "2026-05-17",
+      "repos_total": 36,
+      "prs_opened_total": 43,
+      "prs_open_total": 22,
+      "prs_merged_total": 6,
+      "prs_closed_total": 15
+    },
+    {
+      "date": "2026-05-18",
+      "repos_total": 37,
+      "prs_opened_total": 47,
+      "prs_open_total": 23,
+      "prs_merged_total": 8,
+      "prs_closed_total": 16
+    },
+    {
+      "date": "2026-05-19",
+      "repos_total": 37,
+      "prs_opened_total": 52,
+      "prs_open_total": 26,
+      "prs_merged_total": 9,
+      "prs_closed_total": 17
+    },
+    {
+      "date": "2026-05-20",
+      "repos_total": 37,
+      "prs_opened_total": 58,
+      "prs_open_total": 32,
+      "prs_merged_total": 9,
+      "prs_closed_total": 17
+    },
+    {
+      "date": "2026-05-21",
+      "repos_total": 37,
+      "prs_opened_total": 64,
+      "prs_open_total": 36,
+      "prs_merged_total": 9,
+      "prs_closed_total": 19
+    },
+    {
+      "date": "2026-05-22",
+      "repos_total": 37,
+      "prs_opened_total": 70,
+      "prs_open_total": 40,
+      "prs_merged_total": 11,
+      "prs_closed_total": 19
+    },
+    {
+      "date": "2026-05-23",
+      "repos_total": 37,
+      "prs_opened_total": 75,
+      "prs_open_total": 43,
+      "prs_merged_total": 11,
+      "prs_closed_total": 21
+    },
+    {
+      "date": "2026-05-24",
+      "repos_total": 42,
+      "prs_opened_total": 79,
+      "prs_open_total": 43,
+      "prs_merged_total": 11,
+      "prs_closed_total": 25
+    },
+    {
+      "date": "2026-05-25",
+      "repos_total": 49,
+      "prs_opened_total": 81,
+      "prs_open_total": 42,
+      "prs_merged_total": 12,
+      "prs_closed_total": 27
+    },
+    {
+      "date": "2026-05-26",
+      "repos_total": 55,
+      "prs_opened_total": 84,
+      "prs_open_total": 40,
+      "prs_merged_total": 12,
+      "prs_closed_total": 32
+    },
+    {
+      "date": "2026-05-27",
+      "repos_total": 56,
+      "prs_opened_total": 95,
+      "prs_open_total": 44,
+      "prs_merged_total": 18,
+      "prs_closed_total": 33
+    },
+    {
+      "date": "2026-05-28",
+      "repos_total": 56,
+      "prs_opened_total": 96,
+      "prs_open_total": 45,
+      "prs_merged_total": 18,
+      "prs_closed_total": 33
+    },
+    {
+      "date": "2026-05-29",
+      "repos_total": 56,
+      "prs_opened_total": 102,
+      "prs_open_total": 46,
+      "prs_merged_total": 22,
+      "prs_closed_total": 34
+    },
+    {
+      "date": "2026-05-30",
+      "repos_total": 56,
+      "prs_opened_total": 109,
+      "prs_open_total": 48,
+      "prs_merged_total": 26,
+      "prs_closed_total": 35
+    },
+    {
+      "date": "2026-05-31",
+      "repos_total": 56,
+      "prs_opened_total": 114,
+      "prs_open_total": 42,
+      "prs_merged_total": 31,
+      "prs_closed_total": 41
+    }
+  ],
+  "merged": 31,
+  "open": 42,
+  "closed": 41
+}

@@ -54,28 +54,24 @@ def get_fork_sources(fork_repos):
 
 
 def get_contributed_repos():
+    """Find external repos where user has PRs (not owned, not forked)."""
     all_repos = set()
+    # Use gh search prs (not the deprecated search/issues endpoint)
     for state in ["merged", "open"]:
-        page = 1
-        while True:
-            q = f"type:pr+author:{USERNAME}+is:{state}"
-            out, rc = run(
-                f'gh api "search/issues?q={q}&per_page=100&page={page}" '
-                f"--jq '.items[].repository_url' 2>/dev/null",
-                timeout=60
-            )
-            if not out or rc != 0:
-                break
-            found = False
-            for line in out.split("\n"):
-                line = line.strip()
-                if line and "/repos/" in line:
-                    repo = line.split("/repos/")[-1].strip("/")
-                    all_repos.add(repo)
-                    found = True
-            if not found or page > 5:
-                break
-            page += 1
+        out, rc = run(
+            f"gh search prs --author={USERNAME} --state={state} --limit 1000 "
+            f"--json url --jq '.[].url' 2>/dev/null",
+            timeout=120
+        )
+        if not out or rc != 0:
+            continue
+        for line in out.split("\n"):
+            line = line.strip()
+            # PR URLs: https://github.com/owner/repo/pull/123
+            parts = line.split("/")
+            if len(parts) >= 5 and "github.com" in line:
+                repo = f"{parts[3]}/{parts[4]}"
+                all_repos.add(repo)
     return list(all_repos)
 
 
@@ -140,13 +136,13 @@ def count_prs_in_repo(repo_full_name, username):
             for n in out.split("\n"):
                 if n.strip().isdigit():
                     all_prs.append(int(n.strip()))
-    
+
     if not all_prs:
         return 0, 0, 0
-    
+
     total_added = 0
     total_deleted = 0
-    
+
     for num in all_prs:
         out, rc = run(
             f"gh api repos/{repo_full_name}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
@@ -159,7 +155,7 @@ def count_prs_in_repo(repo_full_name, username):
                 total_deleted += data.get("d", 0)
             except json.JSONDecodeError:
                 pass
-    
+
     return total_added, total_deleted, len(all_prs)
 
 
