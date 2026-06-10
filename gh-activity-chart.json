@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-10T06:00:20.270588",
-  "pr_count": 135,
-  "repo_count": 24,
+  "generated_at": "2026-06-10T19:04:37.401585",
+  "pr_count": 138,
+  "repo_count": 23,
   "daily": [
     {
       "date": "2026-05-02",
@@ -301,7 +301,7 @@
     },
     {
       "date": "2026-06-08",
-      "repos_total": 13,
+      "repos_total": 12,
       "prs_opened_total": 129,
       "prs_open_total": 35,
       "prs_merged_total": 36,
@@ -309,7 +309,7 @@
     },
     {
       "date": "2026-06-09",
-      "repos_total": 24,
+      "repos_total": 23,
       "prs_opened_total": 132,
       "prs_open_total": 0,
       "prs_merged_total": 38,
@@ -317,14 +317,14 @@
     },
     {
       "date": "2026-06-10",
-      "repos_total": 24,
-      "prs_opened_total": 135,
-      "prs_open_total": 1,
-      "prs_merged_total": 40,
+      "repos_total": 23,
+      "prs_opened_total": 138,
+      "prs_open_total": 0,
+      "prs_merged_total": 44,
       "prs_closed_total": 94
     }
   ],
-  "merged": 40,
-  "open": 1,
+  "merged": 44,
+  "open": 0,
   "closed": 94
 }
