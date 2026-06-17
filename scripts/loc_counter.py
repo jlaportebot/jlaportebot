@@ -33,8 +33,24 @@ def run(cmd, timeout=300):
         return "", 1
 
 
+# Repos known to be too large for full history traversal (skip clone, use API only)
+SKIP_CLONE_REPOS = {
+    "google/go-github",                    # upstream of jlaportebot/go-github
+    "sphinx-doc/sphinx",                   # upstream of jlaportebot/sphinx (large)
+    "Lightning-AI/torchmetrics",           # upstream of jlaportebot/torchmetrics
+    "apache/airflow",                      # upstream of jlaportebot/airflow (641MB - huge)
+    "microsoft/agent-governance-toolkit",  # upstream of jlaportebot/agent-governance-toolkit (40MB)
+    "Automattic/harper",                   # upstream of jlaportebot/harper (41MB)
+}
+
+# Owned repos too large for full history traversal (skip clone, use API only)
+SKIP_OWNED_REPOS = {
+    "jlaportebot/qemu",                    # 373MB - too large for blobless clone
+}
+
+
 def get_all_repos():
-    out, rc = run(f"gh api users/{USERNAME}/repos --paginate 2>/dev/null", timeout=120)
+    out, rc = run(f"gh api 'user/repos?per_page=100&visibility=all&affiliation=owner' --paginate 2>/dev/null", timeout=120)
     if not out:
         return []
     try:
@@ -57,21 +73,21 @@ def get_contributed_repos():
     """Find external repos where user has PRs (not owned, not forked)."""
     all_repos = set()
     # Use gh search prs (not the deprecated search/issues endpoint)
-    for state in ["merged", "open"]:
-        out, rc = run(
-            f"gh search prs --author={USERNAME} --state={state} --limit 1000 "
-            f"--json url --jq '.[].url' 2>/dev/null",
-            timeout=120
-        )
-        if not out or rc != 0:
-            continue
-        for line in out.split("\n"):
-            line = line.strip()
-            # PR URLs: https://github.com/owner/repo/pull/123
-            parts = line.split("/")
-            if len(parts) >= 5 and "github.com" in line:
-                repo = f"{parts[3]}/{parts[4]}"
-                all_repos.add(repo)
+    # state=closed includes both merged and closed-without-merge
+    out, rc = run(
+        f"gh search prs --author={USERNAME} --state=closed --limit 1000 "
+        f"--json url --jq '.[].url' 2>/dev/null",
+        timeout=120
+    )
+    if not out or rc != 0:
+        return []
+    for line in out.split("\n"):
+        line = line.strip()
+        # PR URLs: https://github.com/owner/repo/pull/123
+        parts = line.split("/")
+        if len(parts) >= 5 and "github.com" in line:
+            repo = f"{parts[3]}/{parts[4]}"
+            all_repos.add(repo)
     return list(all_repos)
 
 
@@ -81,7 +97,7 @@ def count_loc_via_clone(repo_full_name, tmpdir):
         f"git clone --filter=blob:none --no-single-branch "
         f"https://github.com/{repo_full_name}.git {repo_dir} 2>/dev/null"
     )
-    out, rc = run(clone_cmd, timeout=300)
+    out, rc = run(clone_cmd, timeout=120)
     if rc != 0:
         return 0, 0, 0
     
@@ -89,11 +105,11 @@ def count_loc_via_clone(repo_full_name, tmpdir):
     
     out, rc = run(
         f"cd {repo_dir} && git log --all {author_args} --shortstat --format='' 2>/dev/null",
-        timeout=120
+        timeout=60
     )
     count_out, _ = run(
         f"cd {repo_dir} && git log --all {author_args} --oneline 2>/dev/null | wc -l",
-        timeout=60
+        timeout=30
     )
     commit_count = 0
     try:
@@ -241,12 +257,26 @@ def main():
     
     # Phase 1: Clone ALL repos and count every commit
     all_clone_repos = own_repos + fork_repos
-    
+
     with tempfile.TemporaryDirectory() as tmpdir:
         for i, repo in enumerate(all_clone_repos):
             is_fork = repo in fork_repos
             label = "fork" if is_fork else "own"
             print(f"  [{label} {i+1}/{len(all_clone_repos)}] {repo}...", end=" ", flush=True)
+            
+            # Skip cloning for known-large repos (use API fallback instead)
+            skip_clone = False
+            if is_fork and repo in fork_sources:
+                if fork_sources[repo] in SKIP_CLONE_REPOS:
+                    skip_clone = True
+            elif not is_fork:
+                if repo in SKIP_CLONE_REPOS or repo in SKIP_OWNED_REPOS:
+                    skip_clone = True
+            
+            if skip_clone:
+                print("skipped (too large for clone)", flush=True)
+                continue
+            
             a, d, c = count_loc_via_clone(repo, tmpdir)
             if a > 0 or d > 0 or c > 0:
                 total_added += a
@@ -273,8 +303,18 @@ def main():
     for fork in forks_no_commits:
         if fork in fork_sources:
             api_repos.add(fork_sources[fork])
-    
-    # b) External contributed repos
+
+    # b) Upstreams of forks we skipped due to size
+    for fork in fork_repos:
+        if fork in fork_sources and fork_sources[fork] in SKIP_CLONE_REPOS:
+            api_repos.add(fork_sources[fork])
+
+    # c) Owned repos we skipped due to size
+    for repo in own_repos:
+        if repo in SKIP_OWNED_REPOS:
+            api_repos.add(repo)
+
+    # d) External contributed repos
     contributed = get_contributed_repos()
     fork_source_set = set(fork_sources.values())
     for repo in contributed:
@@ -282,8 +322,8 @@ def main():
             api_repos.add(repo)
     
     api_list = sorted(api_repos)
-    print(f"\nAPI repos (pristine forks + external): {len(api_list)}", flush=True)
-    
+    print(f"\nAPI repos (pristine forks + skipped forks + external): {len(api_list)}", flush=True)
+
     for i, repo in enumerate(api_list):
         print(f"  [api {i+1}/{len(api_list)}] {repo}...", end=" ", flush=True)
         a, d, c = count_prs_in_repo(repo, USERNAME)
