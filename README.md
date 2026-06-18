@@ -1,10 +1,10 @@
 <img src="./gh-activity-chart.svg" alt="GitHub Activity Chart" width="960"/>
 
 **What this tracks:** Cumulative counts over time
-- 🟢 **Repos** — all public repos (owned + forks)
+- 🟠 **Repos** — all public repos (owned + forks)
 - 🔵 **PRs Opened** — total pull requests submitted
-- 🟣 **Open PRs** — currently awaiting review
-- 🟠 **Merged** — successfully merged PRs
+- 🟢 **Open PRs** — currently awaiting review
+- 🟣 **Merged** — successfully merged PRs
 - 🔴 **Closed** — PRs closed without merge
 
 Auto-updated daily.
@@ -27,6 +27,6 @@ Updated daily via GitHub Actions. Counts only commits by @jlaportebot.
 **What this tracks:** Total LLM tokens consumed across all Hermes Agent sessions
 - 🟣 **Total Tokens** — lifetime cumulative (input + output + cache, never resets)
 
-**Lifetime Total:** 4,975,897,985 tokens (from 1,704 sessions)
+**Lifetime Total:** 5,016,951,011 tokens (from 1,719 sessions)
 
 Updated daily via cron job. Tracks all sessions in state.db.
