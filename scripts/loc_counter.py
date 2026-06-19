@@ -50,14 +50,16 @@ SKIP_OWNED_REPOS = {
 
 
 def get_all_repos():
-    out, rc = run(f"gh api 'user/repos?per_page=100&visibility=all&affiliation=owner' --paginate 2>/dev/null", timeout=120)
+    out, rc = run(f'gh api "user/repos?per_page=100\\&visibility=all\\&affiliation=owner" --paginate 2>/dev/null', timeout=120)
     if not out:
         return []
     try:
         repos = json.loads(out)
     except json.JSONDecodeError:
         return []
-    return [{"name": r["full_name"], "fork": r.get("fork", False)} for r in repos]
+    if not isinstance(repos, list):
+        return []
+    return [{"name": r["full_name"], "fork": r.get("fork", False)} for r in repos if isinstance(r, dict) and "full_name" in r]
 
 
 def get_fork_sources(fork_repos):
