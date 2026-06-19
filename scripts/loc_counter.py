@@ -50,7 +50,8 @@ SKIP_OWNED_REPOS = {
 
 
 def get_all_repos():
-    out, rc = run(f"gh api 'user/repos?per_page=100&visibility=all&affiliation=owner' --paginate 2>/dev/null", timeout=120)
+    # Use double quotes with escaped ampersands to avoid shell quoting issues
+    out, rc = run("gh api \"user/repos?per_page=100\\&visibility=all\\&affiliation=owner\" --paginate 2>/dev/null", timeout=120)
     if not out:
         return []
     try:
