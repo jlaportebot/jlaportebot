@@ -55,8 +55,9 @@ SKIP_OWNED_REPOS = {
 
 
 def get_all_repos():
-    # Use double quotes with escaped ampersands to avoid shell quoting issues
-    out, rc = run("gh api \"user/repos?per_page=100\\&visibility=all\\&affiliation=owner\" --paginate 2>/dev/null", timeout=120)
+    # Use public API endpoint (works without auth, returns public repos only)
+    # For private repos, a PAT with 'repo' scope would be needed
+    out, rc = run(f"gh api users/{USERNAME}/repos --paginate 2>/dev/null", timeout=120)
     if not out:
         return []
     try:
