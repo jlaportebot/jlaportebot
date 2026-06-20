@@ -16,6 +16,8 @@ import sys
 import tempfile
 from datetime import datetime, timezone
 
+from github import Github
+
 USERNAME = os.environ.get("GITHUB_USERNAME", "jlaportebot")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", ".")
 
@@ -24,6 +26,7 @@ EMAILS = [
     f"{USERNAME}@users.noreply.github.com",
 ]
 
+GH_TOKEN = os.environ.get("GH_TOKEN")
 
 def run(cmd, timeout=300):
     try:
@@ -49,46 +52,56 @@ SKIP_OWNED_REPOS = {
 }
 
 
+def get_gh_client():
+    """Get authenticated GitHub client."""
+    if GH_TOKEN:
+        return Github(GH_TOKEN)
+    return Github()
+
+
 def get_all_repos():
-    # Use double quotes with escaped ampersands to avoid shell quoting issues
-    out, rc = run("gh api \"user/repos?per_page=100\\&visibility=all\\&affiliation=owner\" --paginate 2>/dev/null", timeout=120)
-    if not out:
-        return []
+    gh = get_gh_client()
     try:
-        repos = json.loads(out)
-    except json.JSONDecodeError:
+        user = gh.get_user()
+        repos = []
+        for repo in user.get_repos(type="all", affiliation="owner"):
+            repos.append({"name": repo.full_name, "fork": repo.fork})
+        return repos
+    except Exception as e:
+        print(f"Warning: failed to fetch repos: {e}", flush=True)
         return []
-    return [{"name": r["full_name"], "fork": r.get("fork", False)} for r in repos]
 
 
 def get_fork_sources(fork_repos):
+    gh = get_gh_client()
     sources = {}
     for fork in fork_repos:
-        out, rc = run(f"gh api repos/{fork} --jq '.source.full_name' 2>/dev/null", timeout=15)
-        if out and out != "null":
-            sources[fork] = out.strip()
+        try:
+            repo = gh.get_repo(fork)
+            if repo.parent:
+                sources[fork] = repo.parent.full_name
+        except Exception:
+            pass
     return sources
 
 
 def get_contributed_repos():
     """Find external repos where user has PRs (not owned, not forked)."""
+    gh = get_gh_client()
     all_repos = set()
-    # Use gh search prs (not the deprecated search/issues endpoint)
-    # state=closed includes both merged and closed-without-merge
-    out, rc = run(
-        f"gh search prs --author={USERNAME} --state=closed --limit 1000 "
-        f"--json url --jq '.[].url' 2>/dev/null",
-        timeout=120
-    )
-    if not out or rc != 0:
-        return []
-    for line in out.split("\n"):
-        line = line.strip()
-        # PR URLs: https://github.com/owner/repo/pull/123
-        parts = line.split("/")
-        if len(parts) >= 5 and "github.com" in line:
-            repo = f"{parts[3]}/{parts[4]}"
-            all_repos.add(repo)
+    try:
+        # Search for PRs by author
+        prs = gh.search_issues(
+            f"author:{USERNAME} type:pr state:closed",
+            sort="created",
+            order="desc"
+        )
+        for pr in prs[:1000]:  # Limit to avoid rate limits
+            # PR URLs: https://github.com/owner/repo/pull/123
+            repo_full_name = pr.repository.full_name
+            all_repos.add(repo_full_name)
+    except Exception as e:
+        print(f"Warning: failed to search PRs: {e}", flush=True)
     return list(all_repos)
 
 
@@ -142,38 +155,26 @@ def count_loc_via_clone(repo_full_name, tmpdir):
 
 
 def count_prs_in_repo(repo_full_name, username):
-    all_prs = []
-    for state in ["merged", "open"]:
-        out, rc = run(
-            f'gh api "search/issues?q=type:pr+author:{username}+repo:{repo_full_name}+is:{state}&per_page=100" '
-            f"--jq '.items[].number' 2>/dev/null",
-            timeout=30
-        )
-        if out:
-            for n in out.split("\n"):
-                if n.strip().isdigit():
-                    all_prs.append(int(n.strip()))
-
-    if not all_prs:
+    gh = get_gh_client()
+    try:
+        repo = gh.get_repo(repo_full_name)
+        pulls = repo.get_pulls(state="all", sort="created", direction="desc")
+        
+        total_added = 0
+        total_deleted = 0
+        pr_count = 0
+        
+        for pr in pulls:
+            if pr.user.login != username:
+                continue
+            total_added += pr.additions
+            total_deleted += pr.deletions
+            pr_count += 1
+        
+        return total_added, total_deleted, pr_count
+    except Exception as e:
+        print(f"Warning: failed to fetch PRs for {repo_full_name}: {e}", flush=True)
         return 0, 0, 0
-
-    total_added = 0
-    total_deleted = 0
-
-    for num in all_prs:
-        out, rc = run(
-            f"gh api repos/{repo_full_name}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
-            timeout=15
-        )
-        if out:
-            try:
-                data = json.loads(out)
-                total_added += data.get("a", 0)
-                total_deleted += data.get("d", 0)
-            except json.JSONDecodeError:
-                pass
-
-    return total_added, total_deleted, len(all_prs)
 
 
 def format_number(n):
@@ -239,20 +240,6 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
 
 def main():
     print(f"Counting LOC for @{USERNAME} across all repos...", flush=True)
-    
-    # Authenticate gh CLI with GITHUB_TOKEN if available
-    gh_token = os.environ.get("GH_TOKEN")
-    if gh_token:
-        # Write token to temp file to avoid shell escaping issues
-        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
-            f.write(gh_token)
-            token_file = f.name
-        try:
-            out, rc = run(f"gh auth login --with-token < {token_file} 2>/dev/null", timeout=10)
-        finally:
-            os.unlink(token_file)
-        if rc != 0:
-            print("Warning: gh auth login failed, proceeding anyway", flush=True)
     
     all_repos = get_all_repos()
     own_repos = [r["name"] for r in all_repos if not r.get("fork")]
