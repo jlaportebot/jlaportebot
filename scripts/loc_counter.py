@@ -240,6 +240,13 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
 def main():
     print(f"Counting LOC for @{USERNAME} across all repos...", flush=True)
     
+    # Authenticate gh CLI with GITHUB_TOKEN if available
+    gh_token = os.environ.get("GH_TOKEN")
+    if gh_token:
+        out, rc = run(f"echo '{gh_token}' | gh auth login --with-token 2>/dev/null", timeout=10)
+        if rc != 0:
+            print("Warning: gh auth login failed, proceeding anyway", flush=True)
+    
     all_repos = get_all_repos()
     own_repos = [r["name"] for r in all_repos if not r.get("fork")]
     fork_repos = [r["name"] for r in all_repos if r.get("fork")]
