@@ -51,20 +51,7 @@ SKIP_OWNED_REPOS = {
 }
 
 
-def gh_auth_login():
-    """Authenticate gh CLI with GH_TOKEN if available."""
-    if not GH_TOKEN:
-        return
-    # Write token to temp file to avoid shell escaping issues
-    with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
-        f.write(GH_TOKEN)
-        token_file = f.name
-    try:
-        out, rc = run(f"gh auth login --with-token < {token_file} 2>/dev/null", timeout=10)
-    finally:
-        os.unlink(token_file)
-    if rc != 0:
-        print("Warning: gh auth login failed, proceeding anyway", flush=True)
+
 
 
 def get_all_repos():
@@ -257,9 +244,6 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
 
 def main():
     print(f"Counting LOC for @{USERNAME} across all repos...", flush=True)
-
-    # Authenticate gh CLI with GITHUB_TOKEN if available
-    gh_auth_login()
 
     all_repos = get_all_repos()
     own_repos = [r["name"] for r in all_repos if not r.get("fork")]
