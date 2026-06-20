@@ -243,7 +243,14 @@ def main():
     # Authenticate gh CLI with GITHUB_TOKEN if available
     gh_token = os.environ.get("GH_TOKEN")
     if gh_token:
-        out, rc = run(f"echo '{gh_token}' | gh auth login --with-token 2>/dev/null", timeout=10)
+        # Write token to temp file to avoid shell escaping issues
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+            f.write(gh_token)
+            token_file = f.name
+        try:
+            out, rc = run(f"gh auth login --with-token < {token_file} 2>/dev/null", timeout=10)
+        finally:
+            os.unlink(token_file)
         if rc != 0:
             print("Warning: gh auth login failed, proceeding anyway", flush=True)
     
