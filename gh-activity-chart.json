@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-19T06:00:58.414996",
-  "pr_count": 268,
+  "generated_at": "2026-07-20T06:00:32.239994",
+  "pr_count": 269,
   "repo_count": 53,
   "daily": [
     {
@@ -630,13 +630,21 @@
     {
       "date": "2026-07-19",
       "repos_total": 53,
-      "prs_opened_total": 268,
+      "prs_opened_total": 269,
       "prs_open_total": 20,
-      "prs_merged_total": 133,
+      "prs_merged_total": 134,
+      "prs_closed_total": 115
+    },
+    {
+      "date": "2026-07-20",
+      "repos_total": 53,
+      "prs_opened_total": 269,
+      "prs_open_total": 20,
+      "prs_merged_total": 134,
       "prs_closed_total": 115
     }
   ],
-  "merged": 133,
+  "merged": 134,
   "open": 20,
   "closed": 115
 }
