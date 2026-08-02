@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T06:00:58.728053",
+  "generated_at": "2026-08-02T06:01:16.053546",
   "pr_count": 275,
   "repo_count": 56,
   "daily": [
@@ -733,6 +733,14 @@
     },
     {
       "date": "2026-08-01",
+      "repos_total": 56,
+      "prs_opened_total": 275,
+      "prs_open_total": 17,
+      "prs_merged_total": 140,
+      "prs_closed_total": 118
+    },
+    {
+      "date": "2026-08-02",
       "repos_total": 56,
       "prs_opened_total": 275,
       "prs_open_total": 17,
