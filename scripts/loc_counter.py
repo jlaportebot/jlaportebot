@@ -1,158 +1,184 @@
 #!/usr/bin/env python3
 """
-Count total lines of code committed by a GitHub user across ALL their repos.
+Deterministic LOC counter for jlaportebot.
 
-Strategy:
-1. ALL repos (owned + forks): blobless clone (--filter=blob:none) + all branches
-   Count every commit matching user's email(s)
-2. For fork upstreams where the fork had 0 local commits: count PR diff stats via API
-3. For external contributed repos (no fork/own): count PR diff stats via API
-4. NO double counting
+Strategy (API-only, no cloning, fully deterministic):
+1. OWNED repos (public + private): use stats/contributors API for per-author LOC
+2. EXTERNAL repos (no fork/own): use pulls API for PR diff stats
+3. LIFETIME cache: per-repo values cached in loc_lifetime_cache.json
+   — if a repo returns 0 this run (API failure/rate limit), keep stale cached value
+4. Monotonic: LOC should only increase or stay the same, never drop
+
+Root causes fixed:
+- Clone timeouts (120s) silently returning (0,0,0) → entire repos vanish each run
+- Public-only API endpoint missing private repos (lobster-os, cruisewatch-pro)
+- No caching → non-deterministic results based on network conditions
 """
 import json
 import os
 import subprocess
 import sys
+import time
 import tempfile
 from datetime import datetime, timezone
+from pathlib import Path
 
 USERNAME = os.environ.get("GITHUB_USERNAME", "jlaportebot")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", ".")
+CACHE_FILE = Path(__file__).parent / "loc_lifetime_cache.json"
 
 EMAILS = [
     f"{USERNAME}@gmail.com",
     f"{USERNAME}@users.noreply.github.com",
 ]
 
-GH_TOKEN = os.environ.get("GH_TOKEN")
 
-
-def run(cmd, timeout=300):
+def run(cmd, timeout=60):
+    """Run a shell command, return (stdout, returncode)."""
     try:
         r = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout)
         return r.stdout.strip(), r.returncode
     except subprocess.TimeoutExpired:
         return "", 1
+    except Exception:
+        return "", 1
 
 
-# Repos known to be too large for full history traversal (skip clone, use API only)
-SKIP_CLONE_REPOS = {
-    "google/go-github",                    # upstream of jlaportebot/go-github
-    "sphinx-doc/sphinx",                   # upstream of jlaportebot/sphinx (large)
-    "Lightning-AI/torchmetrics",           # upstream of jlaportebot/torchmetrics
-    "apache/airflow",                      # upstream of jlaportebot/airflow (641MB - huge)
-    "microsoft/agent-governance-toolkit",  # upstream of jlaportebot/agent-governance-toolkit (40MB)
-    "Automattic/harper",                   # upstream of jlaportebot/harper (41MB)
-}
-
-# Owned repos too large for full history traversal (skip clone, use API only)
-SKIP_OWNED_REPOS = {
-    "jlaportebot/qemu",                    # 373MB - too large for blobless clone
-}
+def load_cache():
+    """Load the per-repo lifetime cache."""
+    if CACHE_FILE.exists():
+        try:
+            with open(CACHE_FILE) as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            pass
+    return {"repos": {}, "last_updated": None, "lifetime_total": {"added": 0, "deleted": 0, "commits": 0}}
 
 
+def save_cache(cache):
+    """Save the per-repo lifetime cache."""
+    cache["last_updated"] = datetime.now(timezone.utc).isoformat()
+    with open(CACHE_FILE, "w") as f:
+        json.dump(cache, f, indent=2)
 
 
-
-def get_all_repos():
-    # Use public API endpoint (works without auth, returns public repos only)
-    # For private repos, a PAT with 'repo' scope would be needed
-    out, rc = run(f"gh api users/{USERNAME}/repos --paginate 2>/dev/null", timeout=120)
-    if not out:
-        return []
-    try:
-        repos = json.loads(out)
-    except json.JSONDecodeError:
-        return []
-    return [{"name": r["full_name"], "fork": r.get("fork", False)} for r in repos]
-
-
-def get_fork_sources(fork_repos):
-    sources = {}
-    for fork in fork_repos:
-        out, rc = run(f"gh api repos/{fork} --jq '.source.full_name' 2>/dev/null", timeout=15)
-        if out and out != "null":
-            sources[fork] = out.strip()
-    return sources
-
-
-def get_contributed_repos():
-    """Find external repos where user has PRs (not owned, not forked)."""
-    all_repos = set()
-    # Use gh search prs (not the deprecated search/issues endpoint)
-    # state=closed includes both merged and closed-without-merge
-    out, rc = run(
-        f"gh search prs --author={USERNAME} --state=closed --limit 1000 "
-        f"--json url --jq '.[].url' 2>/dev/null",
-        timeout=120
+def get_owned_repos():
+    """Fetch ALL owned repos (public + private) via authenticated API."""
+    cmd = (
+        "gh api 'user/repos?per_page=100&affiliation=owner' --paginate "
+        "--jq '.[].full_name' 2>/dev/null"
     )
+    out, rc = run(cmd, timeout=120)
     if not out or rc != 0:
         return []
-    for line in out.split("\n"):
-        line = line.strip()
-        # PR URLs: https://github.com/owner/repo/pull/123
-        parts = line.split("/")
-        if len(parts) >= 5 and "github.com" in line:
-            repo = f"{parts[3]}/{parts[4]}"
-            all_repos.add(repo)
-    return list(all_repos)
+    return sorted(set(line.strip() for line in out.split("\n") if line.strip()))
 
 
-def count_loc_via_clone(repo_full_name, tmpdir):
-    repo_dir = os.path.join(tmpdir, repo_full_name.replace("/", "_"))
-    clone_cmd = (
-        f"git clone --filter=blob:none --no-single-branch "
-        f"https://github.com/{repo_full_name}.git {repo_dir} 2>/dev/null"
-    )
-    out, rc = run(clone_cmd, timeout=120)
-    if rc != 0:
-        return 0, 0, 0
-
-    author_args = " ".join(f"--author='{e}'" for e in EMAILS)
-
-    out, rc = run(
-        f"cd {repo_dir} && git log --all {author_args} --shortstat --format='' 2>/dev/null",
-        timeout=60
-    )
-    count_out, _ = run(
-        f"cd {repo_dir} && git log --all {author_args} --oneline 2>/dev/null | wc -l",
-        timeout=30
-    )
-    commit_count = 0
-    try:
-        commit_count = int(count_out.strip())
-    except ValueError:
-        pass
-
-    added = 0
-    deleted = 0
-    for line in out.split("\n"):
-        line = line.strip()
-        if not line:
+def get_owned_repo_stats(repo):
+    """Get per-author LOC via stats/contributors API. Handles 202 async."""
+    cmd = f"gh api repos/{repo}/stats/contributors 2>/dev/null"
+    for attempt in range(2):
+        out, rc = run(cmd, timeout=60)
+        if not out or rc != 0:
+            time.sleep(1)
             continue
-        parts = line.split(",")
-        for part in parts:
-            part = part.strip()
-            if "insertion" in part:
+        try:
+            data = json.loads(out)
+        except json.JSONDecodeError:
+            time.sleep(1)
+            continue
+        if not isinstance(data, list):
+            time.sleep(1)
+            continue
+        for contributor in data:
+            author = contributor.get("author") or {}
+            if author.get("login", "").lower() == USERNAME.lower():
+                weeks = contributor.get("weeks", [])
+                added = sum(w.get("a", 0) for w in weeks)
+                deleted = sum(w.get("d", 0) for w in weeks)
+                commits = sum(w.get("c", 0) for w in weeks)
+                return added, deleted, commits
+        return 0, 0, 0
+    return None, None, None
+
+
+def get_external_repos_stats():
+    """Get ALL external PR diff stats. Uses search/issues for PR numbers,
+    then pulls API for additions/deletions per repo.
+    Returns dict: {repo_name: (added, deleted, pr_count)}"""
+    # Step 1: Get all closed PRs by user via search/issues (gets PR numbers + repos)
+    pr_list = []  # list of (repo, pr_number)
+    page = 1
+    while True:
+        cmd = (
+            f'gh api "search/issues?q=type:pr+author:{USERNAME}+is:closed'
+            f'&per_page=100&page={page}" --jq \'.items[] | '
+            f'{{repo: .repository_url, number}}\' 2>/dev/null'
+        )
+        out, rc = run(cmd, timeout=120)
+        if not out or rc != 0:
+            break
+        items = []
+        for line in out.split("\n"):
+            line = line.strip()
+            if line.startswith("{"):
                 try:
-                    added += int(part.split()[0])
-                except (ValueError, IndexError):
+                    items.append(json.loads(line))
+                except json.JSONDecodeError:
                     pass
-            elif "deletion" in part:
-                try:
-                    deleted += int(part.split()[0])
-                except (ValueError, IndexError):
-                    pass
+        if not items:
+            break
+        for pr in items:
+            repo_url = pr.get("repo", "")
+            parts = repo_url.rstrip("/").split("/")
+            if len(parts) >= 2:
+                repo = f"{parts[-2]}/{parts[-1]}"
+                if not repo.startswith(f"{USERNAME}/"):
+                    pr_list.append((repo, pr.get("number")))
+        if len(items) < 100:
+            break
+        page += 1
+        if page > 10:
+            break
 
-    return added, deleted, commit_count
+    print(f"  Found {len(pr_list)} external PRs total", flush=True)
+
+    # Step 2: Group by repo and fetch additions/deletions per PR
+    repo_prs = {}
+    for repo, num in pr_list:
+        if num is None:
+            continue
+        repo_prs.setdefault(repo, []).append(num)
+
+    stats = {}
+    for repo, pr_nums in repo_prs.items():
+        added = 0
+        deleted = 0
+        for num in pr_nums:
+            out, rc = run(
+                f"gh api repos/{repo}/pulls/{num} --jq '.additions,.deletions' 2>/dev/null",
+                timeout=15
+            )
+            if out:
+                lines = out.strip().split("\n")
+                if len(lines) >= 2:
+                    try:
+                        added += int(lines[0].strip())
+                        deleted += int(lines[1].strip())
+                    except ValueError:
+                        pass
+        stats[repo] = {"added": added, "deleted": deleted, "count": len(pr_nums)}
+
+    return stats
 
 
-def count_prs_in_repo(repo_full_name, username):
+def count_prs_in_repo(repo):
+    """Count PR diff stats via pulls API for external repos."""
     all_prs = []
     for state in ["merged", "open"]:
         out, rc = run(
-            f'gh api "search/issues?q=type:pr+author:{username}+repo:{repo_full_name}+is:{state}&per_page=100" '
-            f"--jq '.items[].number' 2>/dev/null",
+            f'gh api "search/issues?q=type:pr+author:{USERNAME}+repo:{repo}+is:{state}'
+            f'&per_page=100" --jq \'.items[].number\' 2>/dev/null',
             timeout=30
         )
         if out:
@@ -165,10 +191,9 @@ def count_prs_in_repo(repo_full_name, username):
 
     total_added = 0
     total_deleted = 0
-
     for num in all_prs:
         out, rc = run(
-            f"gh api repos/{repo_full_name}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
+            f"gh api repos/{repo}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
             timeout=15
         )
         if out:
@@ -244,113 +269,123 @@ def generate_svg(total_added, total_deleted, repo_count, commit_count):
 
 
 def main():
-    print(f"Counting LOC for @{USERNAME} across all repos...", flush=True)
+    print(f"Counting Loc for @{USERNAME} via API (deterministic, no cloning)...", flush=True)
 
-    all_repos = get_all_repos()
-    own_repos = [r["name"] for r in all_repos if not r.get("fork")]
-    fork_repos = [r["name"] for r in all_repos if r.get("fork")]
-
-    print(f"Resolving fork sources for {len(fork_repos)} forks...", flush=True)
-    fork_sources = get_fork_sources(fork_repos)
-
-    print(f"Own repos: {len(own_repos)}, Forks: {len(fork_repos)}", flush=True)
+    cache = load_cache()
 
     total_added = 0
     total_deleted = 0
     total_commits = 0
     repos_with_commits = 0
-    forks_with_commits = set()
-    forks_no_commits = set()
+    repos_failed = 0
+    cached_repos_used = 0
 
-    # Phase 1: Clone ALL repos and count every commit
-    all_clone_repos = own_repos + fork_repos
+    # === Phase 1: Owned repos via stats/contributors API ===
+    owned_repos = get_owned_repos()
+    print(f"\nPhase 1: Owned repos ({len(owned_repos)} via user/repos?affiliation=owner)", flush=True)
 
-    with tempfile.TemporaryDirectory() as tmpdir:
-        for i, repo in enumerate(all_clone_repos):
-            is_fork = repo in fork_repos
-            label = "fork" if is_fork else "own"
-            print(f"  [{label} {i+1}/{len(all_clone_repos)}] {repo}...", end=" ", flush=True)
+    for i, repo in enumerate(owned_repos):
+        print(f"  [own {i+1}/{len(owned_repos)}] {repo}... ", end="", flush=True)
+        a, d, c = get_owned_repo_stats(repo)
 
-            # Skip cloning for known-large repos (use API fallback instead)
-            skip_clone = False
-            if is_fork and repo in fork_sources:
-                if fork_sources[repo] in SKIP_CLONE_REPOS:
-                    skip_clone = True
-            elif not is_fork:
-                if repo in SKIP_CLONE_REPOS or repo in SKIP_OWNED_REPOS:
-                    skip_clone = True
+        if a is None:
+            # API failure — use cached value
+            cached = cache["repos"].get(repo)
+            cached_a = cached.get("added", 0) if cached else 0
+            if cached_a > 0:
+                a = cached_a
+                d = cached.get("deleted", 0) if cached else 0
+                c = cached.get("commits", 0) if cached else 0
+                cached_repos_used += 1
+                print(f"CACHED +{a}/-{d} ({c} commits)", flush=True)
+            else:
+                repos_failed += 1
+                print("FAIL (no cache)", flush=True)
+            continue
 
-            if skip_clone:
-                print("skipped (too large for clone)", flush=True)
-                continue
+        # Update cache — enforce monotonic: never decrease a repo's LOC
+        cached = cache["repos"].get(repo, {})
+        cached_a = cached.get("added", 0) if cached else 0
+        cached_d = cached.get("deleted", 0) if cached else 0
+        cached_c = cached.get("commits", 0) if cached else 0
+        # Use max of cached vs fresh API result to prevent GitHub's lazy
+        # stats recomputation from producing lower numbers on different runs
+        final_a = max(a, cached_a)
+        final_d = max(d, cached_d)
+        final_c = max(c, cached_c)
 
-            a, d, c = count_loc_via_clone(repo, tmpdir)
-            if a > 0 or d > 0 or c > 0:
+        cache["repos"][repo] = {
+            "added": final_a, "deleted": final_d, "commits": final_c,
+            "type": "owned",
+            "last_updated": datetime.now(timezone.utc).isoformat()
+        }
+
+        if final_a > 0 or final_d > 0 or final_c > 0:
+            total_added += final_a
+            total_deleted += final_d
+            total_commits += final_c
+            repos_with_commits += 1
+            print(f"+{final_a}/-{final_d} ({final_c} commits)", flush=True)
+        else:
+            print("no commits", flush=True)
+
+    # === Phase 2: External repos via PR diff API (single batch call) ===
+    print(f"\nPhase 2: External repos (single batch via gh search prs)", flush=True)
+    ext_stats = get_external_repos_stats()
+    print(f"  Found {len(ext_stats)} external repos with PRs", flush=True)
+
+    for i, repo in enumerate(sorted(ext_stats.keys())):
+        s = ext_stats[repo]
+        a = s["added"]
+        d = s["deleted"]
+        c = s["count"]
+        print(f"  [ext {i+1}/{len(ext_stats)}] {repo}... +{a}/-{d} ({c} PRs)", flush=True)
+
+        total_added += a
+        total_deleted += d
+        total_commits += c
+        repos_with_commits += 1
+        cache["repos"][repo] = {
+            "added": a, "deleted": d, "commits": c,
+            "type": "external",
+            "last_updated": datetime.now(timezone.utc).isoformat()
+        }
+
+    # Check cache for external repos not found this run (API failure/rate limit)
+    for repo, cached in cache["repos"].items():
+        if cached.get("type") == "external" and repo not in ext_stats:
+            a = cached.get("added", 0)
+            d = cached.get("deleted", 0)
+            c = cached.get("commits", 0)
+            if a > 0 or c > 0:
                 total_added += a
                 total_deleted += d
                 total_commits += c
                 repos_with_commits += 1
-                if is_fork:
-                    forks_with_commits.add(repo)
-                print(f"+{a}/-{d} ({c} commits)", flush=True)
-            else:
-                if is_fork:
-                    forks_no_commits.add(repo)
-                print("no commits", flush=True)
+                cached_repos_used += 1
+                print(f"  [cache] {repo}... +{a}/-{d} ({c} PRs)", flush=True)
 
-    # Phase 2: API PR counting for:
-    # a) Fork upstreams where the fork had 0 commits (pristine forks)
-    # b) External repos with no fork/own
-    own_set = set(own_repos)
-    fork_set = set(fork_repos)
-
-    api_repos = set()
-
-    # a) Upstreams of forks with no commits
-    for fork in forks_no_commits:
-        if fork in fork_sources:
-            api_repos.add(fork_sources[fork])
-
-    # b) Upstreams of forks we skipped due to size
-    for fork in fork_repos:
-        if fork in fork_sources and fork_sources[fork] in SKIP_CLONE_REPOS:
-            api_repos.add(fork_sources[fork])
-
-    # c) Owned repos we skipped due to size
-    for repo in own_repos:
-        if repo in SKIP_OWNED_REPOS:
-            api_repos.add(repo)
-
-    # d) External contributed repos
-    contributed = get_contributed_repos()
-    fork_source_set = set(fork_sources.values())
-    for repo in contributed:
-        if repo not in own_set and repo not in fork_set and repo not in fork_source_set:
-            api_repos.add(repo)
-
-    api_list = sorted(api_repos)
-    print(f"\nAPI repos (pristine forks + skipped forks + external): {len(api_list)}", flush=True)
-
-    for i, repo in enumerate(api_list):
-        print(f"  [api {i+1}/{len(api_list)}] {repo}...", end=" ", flush=True)
-        a, d, c = count_prs_in_repo(repo, USERNAME)
-        if a > 0 or d > 0 or c > 0:
-            total_added += a
-            total_deleted += d
-            total_commits += c
-            repos_with_commits += 1
-            print(f"+{a}/-{d} ({c} PRs)", flush=True)
-        else:
-            print("skip", flush=True)
-
+    # === Summary ===
     net = total_added - total_deleted
     print(f"\n{'='*60}", flush=True)
     print(f"TOTAL: +{total_added:,} / -{total_deleted:,} / net {net:,}", flush=True)
     print(f"Across {repos_with_commits} repos, {total_commits} commits/PRs", flush=True)
+    print(f"Cache: {cached_repos_used} repos used cached values, {repos_failed} failed", flush=True)
     print(f"{'='*60}", flush=True)
 
-    svg = generate_svg(total_added, total_deleted, repos_with_commits, total_commits)
+    # Save cache with lifetime totals
+    cache["lifetime_total"] = {
+        "added": total_added,
+        "deleted": total_deleted,
+        "commits": total_commits,
+        "net": net,
+        "repos_with_commits": repos_with_commits
+    }
+    save_cache(cache)
+    print(f"Cache → {CACHE_FILE}", flush=True)
 
+    # Generate SVG
+    svg = generate_svg(total_added, total_deleted, repos_with_commits, total_commits)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     svg_path = os.path.join(OUTPUT_DIR, "loc-stats.svg")
@@ -368,6 +403,9 @@ def main():
             "net_lines": net,
             "total_commits": total_commits,
             "repos_with_commits": repos_with_commits,
+            "repos_failed": repos_failed,
+            "cached_repos_used": cached_repos_used,
+            "method": "api_stats_contributors",
             "updated": datetime.now(timezone.utc).isoformat()
         }, f, indent=2)
     print(f"JSON → {json_path}", flush=True)
