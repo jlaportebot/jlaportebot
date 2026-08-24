@@ -1,0 +1,789 @@
+{
+  "repos": {
+    "Automattic/harper": {
+      "added": 13193,
+      "deleted": 6167,
+      "commits": 23,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025248+00:00"
+    },
+    "Lightning-AI/torchmetrics": {
+      "added": 7675,
+      "deleted": 379,
+      "commits": 18,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025278+00:00"
+    },
+    "alvinreal/awesome-opensource-ai": {
+      "added": 2,
+      "deleted": 0,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025325+00:00"
+    },
+    "google/benchmark": {
+      "added": 1981,
+      "deleted": 1532,
+      "commits": 3,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025356+00:00"
+    },
+    "google/go-github": {
+      "added": 900,
+      "deleted": 812,
+      "commits": 6,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025363+00:00"
+    },
+    "leonarduk/allotmint": {
+      "added": 1,
+      "deleted": 1,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025413+00:00"
+    },
+    "microsoft/agent-governance-toolkit": {
+      "added": 31274,
+      "deleted": 7720,
+      "commits": 14,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025427+00:00"
+    },
+    "prometheus/prometheus": {
+      "added": 229,
+      "deleted": 8,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025441+00:00"
+    },
+    "rtk-ai/rtk": {
+      "added": 1778,
+      "deleted": 26,
+      "commits": 4,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025471+00:00"
+    },
+    "tailorgunjan93/docnest": {
+      "added": 654,
+      "deleted": 65,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025510+00:00"
+    },
+    "trustgraph-ai/trustgraph": {
+      "added": 12,
+      "deleted": 3,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025516+00:00"
+    },
+    "jlaportebot/TypeScript": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:43.443712+00:00"
+    },
+    "jlaportebot/agent-governance-toolkit": {
+      "added": 7376,
+      "deleted": 3197,
+      "commits": 5,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:44.166771+00:00"
+    },
+    "jlaportebot/ai-website-agent": {
+      "added": 166,
+      "deleted": 0,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:44.672486+00:00"
+    },
+    "jlaportebot/ai-website-dashboard": {
+      "added": 865619,
+      "deleted": 835663,
+      "commits": 141,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:45.159841+00:00"
+    },
+    "jlaportebot/airflow": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:45.820123+00:00"
+    },
+    "jlaportebot/benchmark": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-10T11:45:38.528610+00:00"
+    },
+    "jlaportebot/churnguard": {
+      "added": 13687,
+      "deleted": 865,
+      "commits": 11,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:47.142888+00:00"
+    },
+    "jlaportebot/commitwalk": {
+      "added": 808,
+      "deleted": 10,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:47.613338+00:00"
+    },
+    "jlaportebot/config-drift": {
+      "added": 7947,
+      "deleted": 39,
+      "commits": 11,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:48.097741+00:00"
+    },
+    "jlaportebot/conventional-release": {
+      "added": 4584,
+      "deleted": 0,
+      "commits": 2,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:48.606592+00:00"
+    },
+    "jlaportebot/cruisewatch-pro": {
+      "added": 10815,
+      "deleted": 2909,
+      "commits": 10,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:49.117183+00:00"
+    },
+    "jlaportebot/cube-stairs-3d": {
+      "added": 442,
+      "deleted": 0,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:49.597286+00:00"
+    },
+    "jlaportebot/depcheck": {
+      "added": 71894,
+      "deleted": 12205,
+      "commits": 44,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:50.107512+00:00"
+    },
+    "jlaportebot/dictdiff": {
+      "added": 7750,
+      "deleted": 834,
+      "commits": 10,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:55.628164+00:00"
+    },
+    "jlaportebot/dotfile-sync": {
+      "added": 6421,
+      "deleted": 329,
+      "commits": 10,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:56.190073+00:00"
+    },
+    "jlaportebot/dream-destinations-elevated": {
+      "added": 553,
+      "deleted": 210,
+      "commits": 5,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:56.702555+00:00"
+    },
+    "jlaportebot/envsurf": {
+      "added": 3788,
+      "deleted": 375,
+      "commits": 10,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:57.148934+00:00"
+    },
+    "jlaportebot/esp32-case-viewer": {
+      "added": 1923624,
+      "deleted": 5303,
+      "commits": 8,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:57.662754+00:00"
+    },
+    "jlaportebot/fnk0090-captive-led": {
+      "added": 1320,
+      "deleted": 0,
+      "commits": 2,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:58.157574+00:00"
+    },
+    "jlaportebot/fnk0090-led-controller": {
+      "added": 803,
+      "deleted": 0,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:58.636011+00:00"
+    },
+    "jlaportebot/gh-actions-optimizer": {
+      "added": 4607,
+      "deleted": 0,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:59.145351+00:00"
+    },
+    "jlaportebot/gh-policy-guard": {
+      "added": 2938,
+      "deleted": 0,
+      "commits": 2,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:59.669142+00:00"
+    },
+    "jlaportebot/gh-stats": {
+      "added": 12701,
+      "deleted": 733,
+      "commits": 13,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:00.187618+00:00"
+    },
+    "jlaportebot/gitctx": {
+      "added": 2622,
+      "deleted": 561,
+      "commits": 13,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:00.691570+00:00"
+    },
+    "jlaportebot/gitfleet": {
+      "added": 4436,
+      "deleted": 273,
+      "commits": 11,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:01.213368+00:00"
+    },
+    "jlaportebot/gitpulse": {
+      "added": 4067,
+      "deleted": 518,
+      "commits": 8,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:01.759190+00:00"
+    },
+    "jlaportebot/gitshelf": {
+      "added": 3420,
+      "deleted": 296,
+      "commits": 12,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:02.247644+00:00"
+    },
+    "jlaportebot/gitwork": {
+      "added": 3783,
+      "deleted": 990,
+      "commits": 19,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:02.731065+00:00"
+    },
+    "jlaportebot/go-github": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:03.900903+00:00"
+    },
+    "jlaportebot/grafana": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:04.376385+00:00"
+    },
+    "jlaportebot/grpc-java": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:05.472483+00:00"
+    },
+    "jlaportebot/harper": {
+      "added": 243,
+      "deleted": 23,
+      "commits": 4,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:06.614539+00:00"
+    },
+    "jlaportebot/hermit": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:07.310726+00:00"
+    },
+    "jlaportebot/hookcheck": {
+      "added": 1223,
+      "deleted": 85,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:07.819411+00:00"
+    },
+    "jlaportebot/jlaportebot": {
+      "added": 8049,
+      "deleted": 6864,
+      "commits": 131,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:08.352279+00:00"
+    },
+    "jlaportebot/json_repair": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:09.174768+00:00"
+    },
+    "jlaportebot/kit": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:10.060152+00:00"
+    },
+    "jlaportebot/langchain-runner": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:10.538056+00:00"
+    },
+    "jlaportebot/lobster-os": {
+      "added": 103404,
+      "deleted": 9952,
+      "commits": 93,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:11.060260+00:00"
+    },
+    "jlaportebot/marshes-golf-elevated": {
+      "added": 2606,
+      "deleted": 230,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:11.595091+00:00"
+    },
+    "jlaportebot/next-gen-community-hub": {
+      "added": 984,
+      "deleted": 465,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:12.098968+00:00"
+    },
+    "jlaportebot/nvfetch": {
+      "added": 1081,
+      "deleted": 39,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:12.696175+00:00"
+    },
+    "jlaportebot/ollama-webapp-v2": {
+      "added": 3003,
+      "deleted": 1,
+      "commits": 4,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:18.217404+00:00"
+    },
+    "jlaportebot/ottawa-pizza-perfected": {
+      "added": 1634,
+      "deleted": 1,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:18.745592+00:00"
+    },
+    "jlaportebot/pi5-emulator": {
+      "added": 9108,
+      "deleted": 857,
+      "commits": 6,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:19.210454+00:00"
+    },
+    "jlaportebot/pipdoctor": {
+      "added": 1067,
+      "deleted": 38,
+      "commits": 4,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:19.689797+00:00"
+    },
+    "jlaportebot/pr-insights": {
+      "added": 3030,
+      "deleted": 57,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:20.176977+00:00"
+    },
+    "jlaportebot/prometheus": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:20.843384+00:00"
+    },
+    "jlaportebot/pybench": {
+      "added": 811,
+      "deleted": 19,
+      "commits": 6,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:21.327321+00:00"
+    },
+    "jlaportebot/pydantic-deepagents": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:21.864341+00:00"
+    },
+    "jlaportebot/pyhealth": {
+      "added": 4932,
+      "deleted": 0,
+      "commits": 2,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:22.419037+00:00"
+    },
+    "jlaportebot/python-fire": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:23.415856+00:00"
+    },
+    "jlaportebot/pyversionist": {
+      "added": 994,
+      "deleted": 33,
+      "commits": 8,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:23.897264+00:00"
+    },
+    "jlaportebot/qemu": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:24.607980+00:00"
+    },
+    "jlaportebot/repohealth": {
+      "added": 7381,
+      "deleted": 1080,
+      "commits": 12,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:25.131955+00:00"
+    },
+    "jlaportebot/rtk": {
+      "added": 649,
+      "deleted": 12,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:25.985895+00:00"
+    },
+    "jlaportebot/shelldoc": {
+      "added": 1155,
+      "deleted": 47,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:26.464286+00:00"
+    },
+    "jlaportebot/smelly-cinemas-experience": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:26.966849+00:00"
+    },
+    "jlaportebot/sphinx": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:27.712050+00:00"
+    },
+    "jlaportebot/sqlguard": {
+      "added": 13043,
+      "deleted": 644,
+      "commits": 9,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:28.192292+00:00"
+    },
+    "jlaportebot/supabase": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:28.645486+00:00"
+    },
+    "jlaportebot/systemny-analitik-portfolio": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:29.163238+00:00"
+    },
+    "jlaportebot/todor": {
+      "added": 1299,
+      "deleted": 6,
+      "commits": 3,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:29.646231+00:00"
+    },
+    "jlaportebot/torchmetrics": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:30.601538+00:00"
+    },
+    "jlaportebot/vision": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:31.678889+00:00"
+    },
+    "jlaportebot/vllm": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:32.365586+00:00"
+    },
+    "jlaportebot/vulnpeek": {
+      "added": 1607,
+      "deleted": 208,
+      "commits": 7,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:32.889863+00:00"
+    },
+    "jlaportebot/wanderlust-rewards": {
+      "added": 7121,
+      "deleted": 0,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:33.458739+00:00"
+    },
+    "jlaportebot/wifi-monitor": {
+      "added": 3541,
+      "deleted": 0,
+      "commits": 1,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:33.948532+00:00"
+    },
+    "jlaportebot/workflow-inspector": {
+      "added": 3191,
+      "deleted": 393,
+      "commits": 4,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:24:34.465275+00:00"
+    },
+    "MrPowers/chispa": {
+      "added": 316,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025289+00:00"
+    },
+    "NousResearch/hermes-agent": {
+      "added": 267,
+      "deleted": 5,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025297+00:00"
+    },
+    "Olawoyin007/empathySync": {
+      "added": 88,
+      "deleted": 1,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025305+00:00"
+    },
+    "Textualize/rich": {
+      "added": 22,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025311+00:00"
+    },
+    "TheAlgorithms/Python": {
+      "added": 55,
+      "deleted": 17,
+      "commits": 3,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025319+00:00"
+    },
+    "apache/airflow": {
+      "added": 785,
+      "deleted": 19,
+      "commits": 6,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025333+00:00"
+    },
+    "aweussom/NoLlama": {
+      "added": 107,
+      "deleted": 4,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025340+00:00"
+    },
+    "aws/aws-cdk": {
+      "added": 59,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025348+00:00"
+    },
+    "google/guava": {
+      "added": 74,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025369+00:00"
+    },
+    "google/osv-scanner": {
+      "added": 4,
+      "deleted": 2,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025375+00:00"
+    },
+    "google/wireit": {
+      "added": 134,
+      "deleted": 3,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025382+00:00"
+    },
+    "httpie/cli": {
+      "added": 84,
+      "deleted": 4,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025395+00:00"
+    },
+    "jamesyc/TimeCapsuleSMB": {
+      "added": 446,
+      "deleted": 7,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025401+00:00"
+    },
+    "jestjs/jest": {
+      "added": 37,
+      "deleted": 6,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025407+00:00"
+    },
+    "microsoft/TypeScript": {
+      "added": 16,
+      "deleted": 7,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025419+00:00"
+    },
+    "pallets/itsdangerous": {
+      "added": 182,
+      "deleted": 3,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025433+00:00"
+    },
+    "protocolbuffers/protobuf": {
+      "added": 5,
+      "deleted": 9,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025446+00:00"
+    },
+    "pydantic/pydantic": {
+      "added": 59,
+      "deleted": 36,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025453+00:00"
+    },
+    "python/cpython": {
+      "added": 22,
+      "deleted": 9,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025459+00:00"
+    },
+    "pytorch/pytorch": {
+      "added": 43,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025465+00:00"
+    },
+    "sharkdp/fd": {
+      "added": 155,
+      "deleted": 21,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025477+00:00"
+    },
+    "sphinx-doc/sphinx": {
+      "added": 7956,
+      "deleted": 454,
+      "commits": 16,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025485+00:00"
+    },
+    "sqlalchemy/sqlalchemy": {
+      "added": 2,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025491+00:00"
+    },
+    "stripe/stripe-python": {
+      "added": 116,
+      "deleted": 1,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025498+00:00"
+    },
+    "sveltejs/kit": {
+      "added": 2,
+      "deleted": 1,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025504+00:00"
+    },
+    "unoplat/unoplat-code-confluence": {
+      "added": 64,
+      "deleted": 7,
+      "commits": 6,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025522+00:00"
+    },
+    "vercel/next.js": {
+      "added": 53,
+      "deleted": 0,
+      "commits": 1,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025528+00:00"
+    },
+    "vstorm-co/pydantic-deepagents": {
+      "added": 12,
+      "deleted": 3,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025535+00:00"
+    },
+    "grafana/grafana": {
+      "added": 29,
+      "deleted": 11,
+      "commits": 2,
+      "type": "external",
+      "last_updated": "2026-08-24T02:27:01.025388+00:00"
+    },
+    "jlaportebot/all-in-one": {
+      "added": 0,
+      "deleted": 0,
+      "commits": 0,
+      "type": "owned",
+      "last_updated": "2026-08-24T02:23:46.625629+00:00"
+    }
+  },
+  "last_updated": "2026-08-24T02:27:01.025586+00:00",
+  "lifetime_total": {
+    "added": 3216220,
+    "deleted": 903707,
+    "commits": 833,
+    "net": 2312513,
+    "repos_with_commits": 90
+  }
+}
