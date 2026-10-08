@@ -4,13 +4,13 @@
     "jlaportebot@gmail.com",
     "jlaportebot@users.noreply.github.com"
   ],
-  "total_added": 70154,
-  "total_deleted": 17426,
-  "net_lines": 52728,
-  "total_commits": 146,
-  "repos_with_commits": 42,
-  "repos_failed": 0,
+  "total_added": 3227565,
+  "total_deleted": 906396,
+  "net_lines": 2321169,
+  "total_commits": 907,
+  "repos_with_commits": 93,
+  "repos_failed": 1,
   "cached_repos_used": 0,
   "method": "api_stats_contributors",
-  "updated": "2026-10-07T10:09:06.377279+00:00"
+  "updated": "2026-10-08T09:34:11.986642+00:00"
 }
