@@ -27,6 +27,6 @@ Updated daily via GitHub Actions. Counts only commits by @jlaportebot.
 **What this tracks:** Total LLM tokens consumed across all Hermes Agent sessions
 - 🟣 **Total Tokens** — lifetime cumulative (input + output + cache, never resets)
 
-**Lifetime Total:** 17,629,539,867 tokens (from 3,893 sessions)
+**Lifetime Total:** 17,649,577,720 tokens (from 3,905 sessions)
 
 Updated daily via cron job. Tracks all sessions in state.db.
