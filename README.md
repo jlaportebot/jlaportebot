@@ -11,5 +11,3 @@ _NIM: 4,548 sessions • Claude: 365 sessions • $476.26 cost • Updated 2026-
 <img src="./token-stats.svg" alt="Lifetime Token Consumption" width="960"/>
 
 <img src="./loc-stats.svg" alt="Lifetime Lines of Code" width="960"/>
-
-<img src="./languages.svg" alt="Languages & Stack" width="960"/>

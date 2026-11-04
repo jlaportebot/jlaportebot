@@ -100,8 +100,6 @@ def main():
     lines.append("")
     lines.append('<img src="./loc-stats.svg" alt="Lifetime Lines of Code" width="960"/>')
     lines.append("")
-    lines.append('<img src="./languages.svg" alt="Languages & Stack" width="960"/>')
-    lines.append("")
 
     README.write_text("\n".join(lines))
     print(f"README → {README} (NIM={human(n_total)} Claude={human(claude_total)} Total={human(grand)})")
