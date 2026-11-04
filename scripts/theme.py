@@ -87,7 +87,7 @@ def canvas(width, height, prefix, title, subtitle=None, updated=None):
     """Open the SVG document, paint the gradient canvas and the header."""
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
-        f'width="{width}" height="{height}" role="img" aria-label="{title}">',
+        f'width="{width}" height="{height}" role="img" aria-label="{esc(title)}">',
         defs(prefix),
         f'  <rect width="{width}" height="{height}" rx="16" fill="url(#{prefix}bg)"/>',
     ]
@@ -98,17 +98,17 @@ def canvas(width, height, prefix, title, subtitle=None, updated=None):
 
     out.append(
         f'  <text x="28" y="34" fill="{TEXT}" font-size="16" font-weight="700" '
-        f'font-family="{FONT}" letter-spacing="0.4">{title}</text>'
+        f'font-family="{FONT}" letter-spacing="0.4">{esc(title)}</text>'
     )
     if subtitle:
         out.append(
             f'  <text x="28" y="52" fill="{TEXT_DIM}" font-size="11.5" '
-            f'font-family="{FONT}">{subtitle}</text>'
+            f'font-family="{FONT}">{esc(subtitle)}</text>'
         )
     if updated:
         out.append(
             f'  <text x="{width - 28}" y="34" fill="{TEXT_FAINT}" font-size="10.5" '
-            f'text-anchor="end" font-family="{MONO}">{updated}</text>'
+            f'text-anchor="end" font-family="{MONO}">{esc(updated)}</text>'
         )
     return "\n".join(out)
 
