@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""Regenerate README.md from live stats files.
+"""Regenerate README.md — minimal, readable.
 
-Reads:
-  * bot-stats.json        (github_stats.py)
-  * token_lifetime.json   (token_tracker.py --update)
-
-Writes README.md to the repo root. Idempotent.
+Title, a prominent NIM / Claude / Total token line, then the charts.
+All the extra "what this tracks / how it's built" text is removed.
 """
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -39,8 +35,8 @@ def human(n):
 
 
 def main():
-    stats = load(BOT_STATS, {}) or {}
     token = load(TOKEN_FILE, {}) or {}
+    stats = load(BOT_STATS, {}) or {}
 
     n_total = token.get("lifetime_total", 0)
     n_sessions = token.get("sessions_count", 0)
@@ -48,12 +44,16 @@ def main():
 
     # Claude tokens from Claude Code CLI (best-effort)
     claude_total = 0
+    session_ids = set()
+    cost = 0.0
     try:
-        from pathlib import Path as P
-        import glob
-        claude_dir = P.home() / ".claude" / "projects"
+        claude_dir = Path.home() / ".claude" / "projects"
         for path in claude_dir.rglob("*.jsonl"):
-            for line in path.read_text(errors="replace").splitlines():
+            try:
+                lines = path.read_text(errors="replace").splitlines()
+            except OSError:
+                continue
+            for line in lines:
                 line = line.strip()
                 if not line:
                     continue
@@ -61,6 +61,8 @@ def main():
                     rec = json.loads(line)
                 except json.JSONDecodeError:
                     continue
+                if rec.get("sessionId"):
+                    session_ids.add(rec["sessionId"])
                 mu = rec.get("modelUsage") or {}
                 for usage in mu.values():
                     if isinstance(usage, dict):
@@ -68,13 +70,29 @@ def main():
                         claude_total += int(usage.get("outputTokens") or 0)
                         claude_total += int(usage.get("cacheReadInputTokens") or 0)
                         claude_total += int(usage.get("cacheCreationInputTokens") or 0)
+                if rec.get("totalCostUSD"):
+                    try:
+                        cost += float(rec["totalCostUSD"])
+                    except (TypeError, ValueError):
+                        pass
     except Exception:
         pass
+
+    grand = n_total + claude_total
 
     lines = []
     lines.append("# jlaportebot")
     lines.append("")
-    lines.append("**Autonomous agent dashboard.** Live telemetry for the `jlaportebot` GitHub presence — activity, code volume, token consumption, and language stack — updated daily by a bulletproof cron job.")
+    lines.append("Autonomous agent dashboard — live telemetry updated daily by cron.")
+    lines.append("")
+    lines.append(
+        f"**🤖 Tokens:** "
+        f"**NVIDIA NIM {human(n_total)}**  ·  "
+        f"**Claude {human(claude_total)}**  ·  "
+        f"**Total {human(grand)}**"
+    )
+    lines.append("")
+    lines.append(f"_NIM: {n_sessions:,} sessions • Claude: {len(session_ids)} sessions • ${cost:,.2f} cost • Updated {updated}_")
     lines.append("")
     lines.append('<img src="./gh-activity-chart.svg" alt="GitHub Activity Chart" width="960"/>')
     lines.append("")
@@ -84,40 +102,9 @@ def main():
     lines.append("")
     lines.append('<img src="./languages.svg" alt="Languages & Stack" width="960"/>')
     lines.append("")
-    lines.append("## What this tracks")
-    lines.append("")
-    lines.append("| Chart | Source | Updated |")
-    lines.append("|-------|--------|---------|")
-    lines.append("| **GitHub Activity** | `gh` API — PRs opened/merged/closed, repos created, open PRs | Daily via cron |")
-    lines.append("| **Token Consumption** | Hermes state.db + archive (NVIDIA NIM) + Claude Code CLI projects | Daily via cron |")
-    lines.append("| **Lines of Code** | GitHub stats/contributors API (owned) + PR diff API (external) | Daily via cron |")
-    lines.append("| **Languages & Stack** | GitHub user/repos API | Daily via cron |")
-    lines.append("")
-    lines.append("## Functional stats (live)")
-    lines.append("")
-    lines.append(f"- **🟠 Repos:** {stats.get('total_repos','?')} total ({stats.get('public_repos','?')} public · {stats.get('private_repos','?')} private · {stats.get('original_repos','?')} original · {stats.get('forked_repos','?')} forks)")
-    lines.append(f"- **⭐ Stars:** {stats.get('stars','?')} received · **👀 Watchers:** {stats.get('watchers','?')} · **🐛 Open issues:** {stats.get('open_issues','?')}")
-    lines.append(f"- **🔀 PRs authored:** {stats.get('prs_authored','?')} lifetime · **📝 Issues authored:** {stats.get('issues_authored','?')}")
-    langs = stats.get("languages", [])
-    if langs:
-        lang_str = " · ".join(f"{l['name']} ({l['count']})" for l in langs[:8])
-        lines.append(f"- **🌐 Languages:** {lang_str}")
-    lines.append(f"- **🤖 Token split:** NVIDIA NIM (Hermes Agent) {human(n_total)} vs Claude Code CLI {human(claude_total)} — tracked daily, never resets")
-    lines.append(f"- **📅 Account:** created May 2026 · **📍 Raspberry Pi 5** · **🔗** https://github.com/jlaportebot")
-    lines.append("")
-    lines.append("## How it's built")
-    lines.append("")
-    lines.append("- **Zero cost** — GitHub API + local Hermes state, no paid services")
-    lines.append("- **Deterministic** — cached per-repo LOC, monotonic counters, deduped token sources")
-    lines.append("- **Art style** — abyssal-navy canvas, aurora bloom gradients, glass cards, neon series lines")
-    lines.append("- **Bulletproof cron** — runs every day at 5:30 AM EST, retries on failure, verifies the push landed on remote before reporting success")
-    lines.append("")
-    lines.append(f"---\n")
-    lines.append(f"_Generated by the jlaportebot stats pipeline. Regenerated daily — do not edit the SVGs by hand. Last data refresh: {updated}._")
-    lines.append("")
 
     README.write_text("\n".join(lines))
-    print(f"README → {README} (tokens={human(n_total)}, sessions={n_sessions}, claude={human(claude_total)})")
+    print(f"README → {README} (NIM={human(n_total)} Claude={human(claude_total)} Total={human(grand)})")
     return 0
 
 
