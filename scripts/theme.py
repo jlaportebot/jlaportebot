@@ -122,15 +122,20 @@ def panel(x, y, w, h, accent=None, prefix="p"):
 def stat_card(x, y, w, h, label, value, accent, value_size=34, sublabel=None):
     """A big-number metric card — label above, value below, accent strip."""
     out = [panel(x, y, w, h, accent)]
+    # Wrap long labels so they stay inside the card box instead of overflowing.
+    label_lines = wrap_text(label.upper(), max_chars=32)
+    label_y = y + 28
+    for line in label_lines:
+        out.append(
+            f'  <text x="{x + 24}" y="{label_y}" fill="{TEXT_MUTED}" font-size="11.5" '
+            f'font-weight="700" font-family="{FONT}" letter-spacing="1.2">{esc(line)}</text>'
+        )
+        label_y += 15
     out.append(
-        f'  <text x="{x + 24}" y="{y + 28}" fill="{TEXT_MUTED}" font-size="11.5" '
-        f'font-weight="700" font-family="{FONT}" letter-spacing="1.2">{esc(label).upper()}</text>'
+        f'  <rect x="{x + 24}" y="{label_y + 6}" width="24" height="4" rx="2" fill="{accent}"/>'
     )
     out.append(
-        f'  <rect x="{x + 24}" y="{y + 36}" width="24" height="4" rx="2" fill="{accent}"/>'
-    )
-    out.append(
-        f'  <text x="{x + 24}" y="{y + 36 + value_size + 12}" fill="{TEXT}" '
+        f'  <text x="{x + 24}" y="{label_y + 6 + value_size + 12}" fill="{TEXT}" '
         f'font-size="{value_size}" font-weight="800" font-family="{FONT}">{esc(value)}</text>'
     )
     if sublabel:
@@ -139,6 +144,34 @@ def stat_card(x, y, w, h, label, value, accent, value_size=34, sublabel=None):
             f'font-family="{MONO}">{esc(sublabel)}</text>'
         )
     return "\n".join(out)
+
+
+def wrap_text(text, max_chars=38):
+    """Break a label into lines that fit within a stat card.
+
+    SVG has no automatic text wrapping, so we split on spaces and wrap
+    at max_chars per line. Long words are split forcefully if needed.
+    """
+    words = text.split()
+    if not words:
+        return [""]
+    lines = []
+    current = ""
+    for word in words:
+        candidate = (current + " " + word).strip()
+        if len(candidate) <= max_chars:
+            current = candidate
+        else:
+            if current:
+                lines.append(current)
+            # Force-split words longer than max_chars
+            while len(word) > max_chars:
+                lines.append(word[:max_chars])
+                word = word[max_chars:]
+            current = word
+    if current:
+        lines.append(current)
+    return lines
 
 
 def human(n):
