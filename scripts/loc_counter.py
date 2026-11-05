@@ -27,6 +27,9 @@ USERNAME = os.environ.get("GITHUB_USERNAME", "jlaportebot")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", ".")
 CACHE_FILE = Path(__file__).parent / "loc_lifetime_cache.json"
 
+sys.path.insert(0, str(Path(__file__).parent))
+from theme import W, defs, canvas, close_svg, stat_card, EMERALD, ROSE, TOTAL
+
 EMAILS = [
     f"{USERNAME}@gmail.com",
     f"{USERNAME}@users.noreply.github.com",
@@ -105,15 +108,16 @@ def get_owned_repo_stats(repo):
 def get_external_repos_stats():
     """Get ALL external PR diff stats. Uses search/issues for PR numbers,
     then pulls API for additions/deletions per repo.
-    Returns dict: {repo_name: (added, deleted, pr_count)}"""
+    Returns dict: {repo_name: (added, deleted, pr_count)}
+    """
     # Step 1: Get all closed PRs by user via search/issues (gets PR numbers + repos)
     pr_list = []  # list of (repo, pr_number)
     page = 1
     while True:
         cmd = (
-            f'gh api "search/issues?q=type:pr+author:{USERNAME}+is:closed'
-            f'&per_page=100&page={page}" --jq \'.items[] | '
-            f'{{repo: .repository_url, number}}\' 2>/dev/null'
+            f'gh api "search/issues?q=type:pr+author:{USERNAME}+is:closed"'
+            f"&per_page=100&page={page}\" --jq '.items[] | "
+            f"{{repo: .repository_url, number}}' 2>/dev/null"
         )
         out, rc = run(cmd, timeout=120)
         if not out or rc != 0:
@@ -157,7 +161,7 @@ def get_external_repos_stats():
         for num in pr_nums:
             out, rc = run(
                 f"gh api repos/{repo}/pulls/{num} --jq '.additions,.deletions' 2>/dev/null",
-                timeout=15
+                timeout=15,
             )
             if out:
                 lines = out.strip().split("\n")
@@ -177,9 +181,9 @@ def count_prs_in_repo(repo):
     all_prs = []
     for state in ["merged", "open"]:
         out, rc = run(
-            f'gh api "search/issues?q=type:pr+author:{USERNAME}+repo:{repo}+is:{state}'
+            f'gh api "search/issues?q=type:pr+author:{USERNAME}+repo:{repo}+is:{state}"'
             f'&per_page=100" --jq \'.items[].number\' 2>/dev/null',
-            timeout=30
+            timeout=30,
         )
         if out:
             for n in out.split("\n"):
@@ -194,7 +198,7 @@ def count_prs_in_repo(repo):
     for num in all_prs:
         out, rc = run(
             f"gh api repos/{repo}/pulls/{num} --jq '{{a:.additions,d:.deletions}}' 2>/dev/null",
-            timeout=15
+            timeout=15,
         )
         if out:
             try:
@@ -217,55 +221,54 @@ def format_number(n):
 
 
 def generate_svg(total_added, total_deleted, repo_count, commit_count):
-    added_str = format_number(total_added)
-    deleted_str = format_number(total_deleted)
+    """Render LOC stats using the same abyssal art style as the token/activity charts."""
     net = total_added - total_deleted
-    net_str = format_number(net)
-    commits_str = format_number(commit_count)
 
-    width = 960
-    height = 200
+    parts = []
+    parts.append(canvas(W, 340, "l", "Lifetime Lines of Code",
+                        "Added · removed · net • all commits by @jlaportebot",
+                        f"Updated {datetime.now(timezone.utc).strftime('%b %d, %Y')}"))
+    parts.append(defs("l"))
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0d1117"/>
-      <stop offset="100%" style="stop-color:#161b22"/>
-    </linearGradient>
-  </defs>
+    cw = (W - 64 - 40) / 3  # card width for 3 across
 
-  <!-- Background -->
-  <rect width="{width}" height="{height}" rx="12" fill="url(#bg)" stroke="#30363d" stroke-width="1"/>
+    def human(n):
+        if n >= 1_000_000:
+            return f"{n/1_000_000:.1f}M"
+        elif n >= 1_000:
+            return f"{n/1_000:.1f}K"
+        return str(int(n))
 
-  <!-- Title -->
-  <text x="30" y="36" fill="#f0f6fc" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" font-weight="600">📝 Lifetime Lines of Code</text>
-  <text x="{width-30}" y="36" fill="#8b949e" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="end">by @{USERNAME}</text>
+    # Card 1: Lines Added
+    parts.append(stat_card(32, 120, cw, 160, "Lines Added",
+                           human(total_added), EMERALD,
+                           value_size=30,
+                           sublabel=f"across {repo_count:,} repositories"))
 
-  <!-- Lines Added -->
-  <rect x="20" y="52" width="300" height="80" rx="8" fill="#0d1117" stroke="#238636" stroke-width="1"/>
-  <text x="170" y="75" fill="#3fb950" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle" font-weight="500">Lines Added</text>
-  <text x="170" y="115" fill="#f0f6fc" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="34" text-anchor="middle" font-weight="700">{added_str}</text>
+    # Card 2: Lines Removed
+    cx = 32 + cw + 20
+    parts.append(stat_card(cx, 120, cw, 160, "Lines Removed",
+                           human(total_deleted), ROSE,
+                           value_size=30,
+                           sublabel=f"{commit_str(commit_count)} commits tracked"))
 
-  <!-- Lines Removed -->
-  <rect x="330" y="52" width="300" height="80" rx="8" fill="#0d1117" stroke="#da3633" stroke-width="1"/>
-  <text x="480" y="75" fill="#f85149" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle" font-weight="500">Lines Removed</text>
-  <text x="480" y="115" fill="#f0f6fc" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="34" text-anchor="middle" font-weight="700">{deleted_str}</text>
+    # Card 3: Net Lines
+    tx = cx + cw + 20
+    parts.append(stat_card(tx, 120, cw, 160, "Net Lines (Added − Removed)",
+                           human(net), TOTAL,
+                           value_size=30,
+                           sublabel=f"cumulative lifetime total"))
 
-  <!-- Net Lines -->
-  <rect x="640" y="52" width="300" height="80" rx="8" fill="#0d1117" stroke="#1f6feb" stroke-width="1"/>
-  <text x="790" y="75" fill="#58a6ff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle" font-weight="500">Net Lines (Added − Removed)</text>
-  <text x="790" y="115" fill="#f0f6fc" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="34" text-anchor="middle" font-weight="700">{net_str}</text>
+    parts.append(close_svg([]))
+    return "\n".join(parts)
 
-  <!-- Footer -->
-  <rect x="20" y="142" width="460" height="42" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-  <text x="250" y="168" fill="#8b949e" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" text-anchor="middle">
-    <tspan fill="#c9d1d9" font-weight="600">{commits_str}</tspan> commits across <tspan fill="#c9d1d9" font-weight="600">{repo_count}</tspan> repositories
-  </text>
 
-  <rect x="490" y="142" width="450" height="42" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-  <text x="715" y="168" fill="#8b949e" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" font-size="11" text-anchor="middle">Updated {datetime.now(timezone.utc).strftime("%b %d, %Y")} • All commits by @{USERNAME}</text>
-</svg>'''
-    return svg
+def commit_str(n):
+    if n >= 1_000_000:
+        return f"{n/1_000_000:.1f}M"
+    elif n >= 1_000:
+        return f"{n/1_000:.1f}K"
+    return str(int(n))
 
 
 def main():
@@ -367,6 +370,7 @@ def main():
 
     # === Summary ===
     net = total_added - total_deleted
+
     print(f"\n{'='*60}", flush=True)
     print(f"TOTAL: +{total_added:,} / -{total_deleted:,} / net {net:,}", flush=True)
     print(f"Across {repos_with_commits} repos, {total_commits} commits/PRs", flush=True)

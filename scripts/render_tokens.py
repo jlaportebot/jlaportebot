@@ -4,7 +4,6 @@
 Three big clean cards at a glance, plus an organized Claude Code CLI per-model
 breakdown below so it's obvious which models drove the usage.
 """
-import glob
 import json
 import sys
 from collections import defaultdict
@@ -19,6 +18,16 @@ from theme import (
 
 TOKEN_FILE = Path(__file__).parent.parent / "token_lifetime.json"
 CLAUDE_DIR = Path.home() / ".claude" / "projects"
+
+# Layout constants so nothing is cut off.
+CANVAS_H = 620
+CARDS_Y = 120
+CARDS_H = 180
+MODEL_HEADER_Y = 320
+MODEL_SUB_Y = 336
+TABLE_HEADER_Y = 358
+ROW_START_Y = 376
+ROW_H = 17
 
 
 def load_hermes_tokens():
@@ -95,7 +104,7 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
     claude_pct = pct(claude_total, grand)
 
     parts = []
-    parts.append(canvas(W, 520, "t", "Lifetime Token Consumption",
+    parts.append(canvas(W, CANVAS_H, "t", "Lifetime Token Consumption",
                         "Hermes Agent (NVIDIA NIM) · Claude Code CLI · Combined",
                         f"Updated {nim_updated[:10] if nim_updated else ''}"))
     parts.append(defs("t"))
@@ -103,33 +112,33 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
     cw = (W - 64 - 40) / 3  # card width for 3 across
 
     # Card 1: NVIDIA NIM
-    parts.append(stat_card(32, 120, cw, 170, "NVIDIA NIM (Hermes Agent)",
+    parts.append(stat_card(32, CARDS_Y, cw, CARDS_H, "NVIDIA NIM (Hermes Agent)",
                            human(nim_total), NVIDIA,
                            value_size=32,
                            sublabel=f"{nim_sessions:,} sessions  •  {nim_pct} of total"))
 
     # Card 2: Claude Code CLI
     cx = 32 + cw + 20
-    parts.append(stat_card(cx, 120, cw, 170, "Claude Code CLI",
+    parts.append(stat_card(cx, CARDS_Y, cw, CARDS_H, "Claude Code CLI",
                            human(claude_total), ANTHROPIC,
                            value_size=32,
                            sublabel=f"{len(sessions)} sessions  •  ${cost:,.2f} cost  •  {claude_pct} of total"))
 
     # Card 3: Total
     tx = cx + cw + 20
-    parts.append(stat_card(tx, 120, cw, 170, "Combined Total",
+    parts.append(stat_card(tx, CARDS_Y, cw, CARDS_H, "Combined Total",
                            human(grand), TOTAL,
                            value_size=34,
                            sublabel=f"NIM {human(nim_total)} + Claude {human(claude_total)}  •  never resets"))
 
     # --- Claude per-model breakdown -------------------------------------
     parts.append(
-        f'  <text x="32" y="322" fill="{TEXT}" font-size="14" font-weight="800" '
+        f'  <text x="32" y="{MODEL_HEADER_Y}" fill="{TEXT}" font-size="14" font-weight="800" '
         f'font-family="{FONT}">Claude Code CLI — token use by model</text>'
     )
     parts.append(
-        f'  <text x="32" y="338" fill="{TEXT_MUTED}" font-size="11" font-family="{FONT}">'
-        f"sorted by total tokens, input / output / cache read / cache write</text>"
+        f'  <text x="32" y="{MODEL_SUB_Y}" fill="{TEXT_MUTED}" font-size="11" font-family="{FONT}">'
+        f"sorted by total tokens · input / output / cache read / cache write</text>"
     )
 
     # Build sorted model rows: (model, total, in, out, cache_r, cache_w)
@@ -141,21 +150,18 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
 
     # Table header
     hx = [32, 300, 420, 520, 620, 720, 860]
-    headers = ["Model", "Total", "Input", "Output", "Cache R", "Cache W", ""]
-    y = 360
-    parts.append(f'  <text x="{hx[0]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}">Model</text>')
-    parts.append(f'  <text x="{hx[1]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">Total</text>')
-    parts.append(f'  <text x="{hx[2]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">Input</text>')
-    parts.append(f'  <text x="{hx[3]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">Output</text>')
-    parts.append(f'  <text x="{hx[4]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">Cache R</text>')
-    parts.append(f'  <text x="{hx[5]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">Cache W</text>')
+    headers = [("Model", False), ("Total", True), ("Input", True),
+               ("Output", True), ("Cache R", True), ("Cache W", True)]
+    y = TABLE_HEADER_Y
+    for i, (label, right) in enumerate(headers):
+        anchor = "end" if right else "start"
+        parts.append(f'  <text x="{hx[i]}" y="{y}" fill="{TEXT_MUTED}" font-size="10" '
+                     f'font-weight="700" font-family="{MONO}" text-anchor="{anchor}">{label}</text>')
 
     # Rows (top 8 to keep it readable)
-    row_h = 17
     show = rows[:8]
     for i, (model, total, inp, outp, cachr, cachw) in enumerate(show):
-        ry = y + row_h * (i + 1)
-        # short model name for display
+        ry = ROW_START_Y + ROW_H * i
         disp = model
         if len(disp) > 34:
             disp = disp[:31] + "..."
@@ -168,12 +174,13 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
 
     if len(rows) > 8:
         rest_total = sum(r[1] for r in rows[8:])
-        ry = y + row_h * (len(show) + 1)
+        ry = ROW_START_Y + ROW_H * len(show)
         parts.append(f'  <text x="{hx[0]}" y="{ry}" fill="{TEXT_MUTED}" font-size="10" font-family="{MONO}">+{len(rows)-8} more models</text>')
         parts.append(f'  <text x="{hx[1]}" y="{ry}" fill="{TEXT_MUTED}" font-size="10" font-weight="700" font-family="{MONO}" text-anchor="end">{human(rest_total)}</text>')
 
-    # Footnote: share of grand total
-    fy = y + row_h * (len(show) + 2) + 10
+    # Footnote: share of grand total (positioned below last row with margin)
+    last_row_y = ROW_START_Y + ROW_H * len(show)
+    fy = last_row_y + ROW_H + 16
     claude_share = pct(claude_total, grand) if grand else "0.0%"
     parts.append(
         f'  <text x="32" y="{fy}" fill="{TEXT_MUTED}" font-size="10" font-family="{MONO}">'
