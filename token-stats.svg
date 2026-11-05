@@ -8,7 +8,7 @@
   <rect width="960" height="620" rx="18" fill="url(#tglow)"/>
   <rect width="960" height="620" rx="18" fill="none" stroke="#273254" stroke-width="1"/>
   <text x="32" y="36" fill="#eef2fb" font-size="17" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Lifetime Token Consumption</text>
-  <text x="32" y="60" fill="#93a3c1" font-size="12" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Hermes Agent (NVIDIA NIM) · Claude Code CLI · Combined</text>
+  <text x="32" y="60" fill="#93a3c1" font-size="12" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Hermes Agent (NVIDIA NIM) · Claude Code CLI (controlled by hermes) · Combined</text>
   <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-04</text>
   <defs>
     <linearGradient id="tbg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b1120"/><stop offset="60%" stop-color="#101a30"/><stop offset="100%" stop-color="#0b1120"/></linearGradient>
@@ -23,7 +23,7 @@
   <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,548 sessions  •  96.7% of total</text>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="#111930" stroke="#273254" stroke-width="1"/>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#d97757" stroke-opacity="0.35" stroke-width="1"/>
-  <text x="361.3333333333333" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">CLAUDE CODE CLI</text>
+  <text x="361.3333333333333" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">CLAUDE CODE CLI (CONTROLLED BY HERMES)</text>
   <rect x="361.3333333333333" y="156" width="24" height="4" rx="2" fill="#d97757"/>
   <text x="361.3333333333333" y="200" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">706.57M</text>
   <text x="361.3333333333333" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">365 sessions  •  $476.26 cost  •  3.3% of total</text>
@@ -33,7 +33,7 @@
   <rect x="666.6666666666666" y="156" width="24" height="4" rx="2" fill="#22d3ee"/>
   <text x="666.6666666666666" y="202" fill="#eef2fb" font-size="34" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">21.42B</text>
   <text x="666.6666666666666" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">NIM 20.72B + Claude 706.57M  •  never resets</text>
-  <text x="32" y="320" fill="#eef2fb" font-size="14" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Claude Code CLI — token use by model</text>
+  <text x="32" y="320" fill="#eef2fb" font-size="14" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Claude Code CLI (controlled by hermes) — token use by model</text>
   <text x="32" y="336" fill="#93a3c1" font-size="11" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">sorted by total tokens · input / output / cache read / cache write</text>
   <text x="32" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="start">Model</text>
   <text x="300" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">Total</text>

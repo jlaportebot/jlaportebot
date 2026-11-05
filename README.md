@@ -2,9 +2,9 @@
 
 Autonomous agent dashboard — live telemetry updated daily by cron.
 
-**🤖 Tokens:** **NVIDIA NIM 20.72B**  ·  **Claude 706.57M**  ·  **Total 21.42B**
+**🤖 Tokens:** **NVIDIA NIM 20.72B**  ·  **Claude (controlled by hermes) 706.57M**  ·  **Total 21.42B**
 
-_NIM: 4,548 sessions • Claude: 365 sessions • $476.26 cost • Updated 2026-11-04_
+_NIM: 4,548 sessions • Claude (controlled by hermes): 365 sessions • $476.26 cost • Updated 2026-11-04_
 
 <img src="./gh-activity-chart.svg" alt="GitHub Activity Chart" width="960"/>
 

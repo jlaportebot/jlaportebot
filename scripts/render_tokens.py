@@ -105,7 +105,7 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
 
     parts = []
     parts.append(canvas(W, CANVAS_H, "t", "Lifetime Token Consumption",
-                        "Hermes Agent (NVIDIA NIM) · Claude Code CLI · Combined",
+                        "Hermes Agent (NVIDIA NIM) · Claude Code CLI (controlled by hermes) · Combined",
                         f"Updated {nim_updated[:10] if nim_updated else ''}"))
     parts.append(defs("t"))
 
@@ -119,7 +119,7 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
 
     # Card 2: Claude Code CLI
     cx = 32 + cw + 20
-    parts.append(stat_card(cx, CARDS_Y, cw, CARDS_H, "Claude Code CLI",
+    parts.append(stat_card(cx, CARDS_Y, cw, CARDS_H, "Claude Code CLI (controlled by hermes)",
                            human(claude_total), ANTHROPIC,
                            value_size=32,
                            sublabel=f"{len(sessions)} sessions  •  ${cost:,.2f} cost  •  {claude_pct} of total"))
@@ -134,7 +134,7 @@ def render(nim_total, nim_sessions, nim_updated, claude_total, sessions, cost, p
     # --- Claude per-model breakdown -------------------------------------
     parts.append(
         f'  <text x="32" y="{MODEL_HEADER_Y}" fill="{TEXT}" font-size="14" font-weight="800" '
-        f'font-family="{FONT}">Claude Code CLI — token use by model</text>'
+        f'font-family="{FONT}">Claude Code CLI (controlled by hermes) — token use by model</text>'
     )
     parts.append(
         f'  <text x="32" y="{MODEL_SUB_Y}" fill="{TEXT_MUTED}" font-size="11" font-family="{FONT}">'

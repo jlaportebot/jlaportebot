@@ -88,11 +88,11 @@ def main():
     lines.append(
         f"**🤖 Tokens:** "
         f"**NVIDIA NIM {human(n_total)}**  ·  "
-        f"**Claude {human(claude_total)}**  ·  "
+        f"**Claude (controlled by hermes) {human(claude_total)}**  ·  "
         f"**Total {human(grand)}**"
     )
     lines.append("")
-    lines.append(f"_NIM: {n_sessions:,} sessions • Claude: {len(session_ids)} sessions • ${cost:,.2f} cost • Updated {updated}_")
+    lines.append(f"_NIM: {n_sessions:,} sessions • Claude (controlled by hermes): {len(session_ids)} sessions • ${cost:,.2f} cost • Updated {updated}_")
     lines.append("")
     lines.append('<img src="./gh-activity-chart.svg" alt="GitHub Activity Chart" width="960"/>')
     lines.append("")
