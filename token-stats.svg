@@ -9,7 +9,7 @@
   <rect width="960" height="620" rx="18" fill="none" stroke="#273254" stroke-width="1"/>
   <text x="32" y="36" fill="#eef2fb" font-size="17" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Lifetime Token Consumption</text>
   <text x="32" y="60" fill="#93a3c1" font-size="12" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Hermes Agent (NVIDIA NIM) · Claude Code CLI (controlled by hermes) · Combined</text>
-  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-05</text>
+  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-06</text>
   <defs>
     <linearGradient id="tbg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b1120"/><stop offset="60%" stop-color="#101a30"/><stop offset="100%" stop-color="#0b1120"/></linearGradient>
     <radialGradient id="tglow" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#23305b" stop-opacity="0.25"/><stop offset="100%" stop-color="#23305b" stop-opacity="0"/></radialGradient>
@@ -19,21 +19,21 @@
   <rect x="32" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#76b900" stroke-opacity="0.35" stroke-width="1"/>
   <text x="56" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">NVIDIA NIM (HERMES AGENT)</text>
   <rect x="56" y="169" width="24" height="4" rx="2" fill="#76b900"/>
-  <text x="56" y="213" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">20.77B</text>
-  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,557 sessions  •  96.7% of total</text>
+  <text x="56" y="213" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">20.9B</text>
+  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,598 sessions  •  96.3% of total</text>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="#111930" stroke="#273254" stroke-width="1"/>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#d97757" stroke-opacity="0.35" stroke-width="1"/>
   <text x="361.3333333333333" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">CLAUDE CODE CLI (CONTROLLED BY</text>
   <text x="361.3333333333333" y="163" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">HERMES)</text>
   <rect x="361.3333333333333" y="184" width="24" height="4" rx="2" fill="#d97757"/>
-  <text x="361.3333333333333" y="228" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">707.25M</text>
-  <text x="361.3333333333333" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">369 sessions  •  $477.42 cost  •  3.3% of total</text>
+  <text x="361.3333333333333" y="228" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">802.44M</text>
+  <text x="361.3333333333333" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">480 sessions  •  $547.10 cost  •  3.7% of total</text>
   <rect x="642.6666666666666" y="120" width="285.3333333333333" height="180" rx="14" fill="#111930" stroke="#273254" stroke-width="1"/>
   <rect x="642.6666666666666" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#22d3ee" stroke-opacity="0.35" stroke-width="1"/>
   <text x="666.6666666666666" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">COMBINED TOTAL</text>
   <rect x="666.6666666666666" y="169" width="24" height="4" rx="2" fill="#22d3ee"/>
-  <text x="666.6666666666666" y="215" fill="#eef2fb" font-size="34" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">21.48B</text>
-  <text x="666.6666666666666" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">NIM 20.77B + Claude 707.25M  •  never resets</text>
+  <text x="666.6666666666666" y="215" fill="#eef2fb" font-size="34" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">21.7B</text>
+  <text x="666.6666666666666" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">NIM 20.9B + Claude 802.44M  •  never resets</text>
   <text x="32" y="320" fill="#eef2fb" font-size="14" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Claude Code CLI (controlled by hermes) — token use by model</text>
   <text x="32" y="336" fill="#93a3c1" font-size="11" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">sorted by total tokens · input / output / cache read / cache write</text>
   <text x="32" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="start">Model</text>
@@ -43,11 +43,11 @@
   <text x="620" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">Cache R</text>
   <text x="720" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">Cache W</text>
   <text x="32" y="376" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-opus-5-5</text>
-  <text x="300" y="376" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">444.21M</text>
-  <text x="420" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">11.23K</text>
-  <text x="520" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">3.67M</text>
-  <text x="620" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">427.08M</text>
-  <text x="720" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">13.45M</text>
+  <text x="300" y="376" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">512.35M</text>
+  <text x="420" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">13.4K</text>
+  <text x="520" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">4.2M</text>
+  <text x="620" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">492.97M</text>
+  <text x="720" y="376" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">15.17M</text>
   <text x="32" y="393" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-sonnet-5-5</text>
   <text x="300" y="393" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">139.88M</text>
   <text x="420" y="393" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">2.87K</text>
@@ -55,21 +55,21 @@
   <text x="620" y="393" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">131.41M</text>
   <text x="720" y="393" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">6.15M</text>
   <text x="32" y="410" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-opus-5</text>
-  <text x="300" y="410" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">108.21M</text>
-  <text x="420" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">1.99K</text>
-  <text x="520" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">1.77M</text>
-  <text x="620" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">101.67M</text>
-  <text x="720" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">4.76M</text>
+  <text x="300" y="410" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">125.58M</text>
+  <text x="420" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">2.4K</text>
+  <text x="520" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">2.06M</text>
+  <text x="620" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">117.88M</text>
+  <text x="720" y="410" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">5.64M</text>
   <text x="32" y="427" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-opus-4-8</text>
-  <text x="300" y="427" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">11.27M</text>
-  <text x="420" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">1.45K</text>
-  <text x="520" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">200.81K</text>
-  <text x="620" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">10.59M</text>
-  <text x="720" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">479.72K</text>
+  <text x="300" y="427" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">20.4M</text>
+  <text x="420" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">2.08K</text>
+  <text x="520" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">294.66K</text>
+  <text x="620" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">19.51M</text>
+  <text x="720" y="427" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">595.85K</text>
   <text x="32" y="444" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-haiku-5-5</text>
-  <text x="300" y="444" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">3.55M</text>
-  <text x="420" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">2.63M</text>
-  <text x="520" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">236.24K</text>
+  <text x="300" y="444" fill="#eef2fb" font-size="10.5" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">4.1M</text>
+  <text x="420" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">3.16M</text>
+  <text x="520" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">260.63K</text>
   <text x="620" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">475.12K</text>
   <text x="720" y="444" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">211.01K</text>
   <text x="32" y="461" fill="#eef2fb" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">claude-sonnet-5</text>
@@ -84,5 +84,5 @@
   <text x="520" y="478" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">36</text>
   <text x="620" y="478" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">13.21K</text>
   <text x="720" y="478" fill="#6270a1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="end">7.89K</text>
-  <text x="32" y="528" fill="#93a3c1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Claude = 3.3% of grand total · 369 sessions · $477.42 cost</text>
+  <text x="32" y="528" fill="#93a3c1" font-size="10" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Claude = 3.7% of grand total · 480 sessions · $547.10 cost</text>
 </svg>
