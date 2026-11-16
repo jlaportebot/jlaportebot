@@ -9,7 +9,7 @@
   <rect width="960" height="620" rx="18" fill="none" stroke="#273254" stroke-width="1"/>
   <text x="32" y="36" fill="#eef2fb" font-size="17" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Lifetime Token Consumption</text>
   <text x="32" y="60" fill="#93a3c1" font-size="12" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Hermes Agent (NVIDIA NIM) · Claude Code CLI (controlled by hermes) · Combined</text>
-  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-15</text>
+  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-16</text>
   <defs>
     <linearGradient id="tbg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b1120"/><stop offset="60%" stop-color="#101a30"/><stop offset="100%" stop-color="#0b1120"/></linearGradient>
     <radialGradient id="tglow" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#23305b" stop-opacity="0.25"/><stop offset="100%" stop-color="#23305b" stop-opacity="0"/></radialGradient>
@@ -20,7 +20,7 @@
   <text x="56" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">NVIDIA NIM (HERMES AGENT)</text>
   <rect x="56" y="169" width="24" height="4" rx="2" fill="#76b900"/>
   <text x="56" y="213" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">21.85B</text>
-  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,695 sessions  •  93.9% of total</text>
+  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,697 sessions  •  93.9% of total</text>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="#111930" stroke="#273254" stroke-width="1"/>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#d97757" stroke-opacity="0.35" stroke-width="1"/>
   <text x="361.3333333333333" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">CLAUDE CODE CLI (CONTROLLED BY</text>
