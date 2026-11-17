@@ -1,12 +1,12 @@
 {
-  "lifetime_total": 21853869781,
-  "last_update": "2026-11-16T05:32:18.063175",
-  "sessions_count": 4697,
+  "lifetime_total": 21883690653,
+  "last_update": "2026-11-17T05:31:38.320904",
+  "sessions_count": 4705,
   "breakdown": {
-    "input_tokens": 10705113826,
-    "output_tokens": 74365361,
-    "cache_read_tokens": 11058222219,
+    "input_tokens": 10709592977,
+    "output_tokens": 74694626,
+    "cache_read_tokens": 11083061531,
     "cache_write_tokens": 0,
-    "reasoning_tokens": 16168375
+    "reasoning_tokens": 16341519
   }
 }
