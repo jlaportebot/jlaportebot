@@ -9,7 +9,7 @@
   <rect width="960" height="620" rx="18" fill="none" stroke="#273254" stroke-width="1"/>
   <text x="32" y="36" fill="#eef2fb" font-size="17" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Lifetime Token Consumption</text>
   <text x="32" y="60" fill="#93a3c1" font-size="12" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Hermes Agent (NVIDIA NIM) · Claude Code CLI (controlled by hermes) · Combined</text>
-  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-23</text>
+  <text x="928" y="34" fill="#6270a1" font-size="11" text-anchor="end" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">Updated 2026-11-24</text>
   <defs>
     <linearGradient id="tbg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0b1120"/><stop offset="60%" stop-color="#101a30"/><stop offset="100%" stop-color="#0b1120"/></linearGradient>
     <radialGradient id="tglow" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#23305b" stop-opacity="0.25"/><stop offset="100%" stop-color="#23305b" stop-opacity="0"/></radialGradient>
@@ -19,8 +19,8 @@
   <rect x="32" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#76b900" stroke-opacity="0.35" stroke-width="1"/>
   <text x="56" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">NVIDIA NIM (HERMES AGENT)</text>
   <rect x="56" y="169" width="24" height="4" rx="2" fill="#76b900"/>
-  <text x="56" y="213" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">22.14B</text>
-  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,795 sessions  •  89.0% of total</text>
+  <text x="56" y="213" fill="#eef2fb" font-size="32" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">22.17B</text>
+  <text x="56" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">4,810 sessions  •  89.0% of total</text>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="#111930" stroke="#273254" stroke-width="1"/>
   <rect x="337.3333333333333" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#d97757" stroke-opacity="0.35" stroke-width="1"/>
   <text x="361.3333333333333" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">CLAUDE CODE CLI (CONTROLLED BY</text>
@@ -32,8 +32,8 @@
   <rect x="642.6666666666666" y="120" width="285.3333333333333" height="180" rx="14" fill="none" stroke="#22d3ee" stroke-opacity="0.35" stroke-width="1"/>
   <text x="666.6666666666666" y="148" fill="#93a3c1" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif" letter-spacing="1.2">COMBINED TOTAL</text>
   <rect x="666.6666666666666" y="169" width="24" height="4" rx="2" fill="#22d3ee"/>
-  <text x="666.6666666666666" y="215" fill="#eef2fb" font-size="34" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">24.88B</text>
-  <text x="666.6666666666666" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">NIM 22.14B + Claude 2.74B  •  never resets</text>
+  <text x="666.6666666666666" y="215" fill="#eef2fb" font-size="34" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">24.91B</text>
+  <text x="666.6666666666666" y="280" fill="#6270a1" font-size="10.5" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace">NIM 22.17B + Claude 2.74B  •  never resets</text>
   <text x="32" y="320" fill="#eef2fb" font-size="14" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">Claude Code CLI (controlled by hermes) — token use by model</text>
   <text x="32" y="336" fill="#93a3c1" font-size="11" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Helvetica,Arial,sans-serif">sorted by total tokens · input / output / cache read / cache write</text>
   <text x="32" y="358" fill="#93a3c1" font-size="10" font-weight="700" font-family="'SFMono-Regular',Menlo,Consolas,'Liberation Mono',monospace" text-anchor="start">Model</text>
